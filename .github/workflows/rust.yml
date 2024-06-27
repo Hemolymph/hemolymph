@@ -23,6 +23,9 @@ jobs:
           default: true
           override: true
 
+      - name: Install Trunk
+        run: cargo install trunk --locked
+
       - name: Build Frontend
         working-directory: ./frontend
         run: make
