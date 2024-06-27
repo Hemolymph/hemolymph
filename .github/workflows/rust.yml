@@ -22,7 +22,7 @@ jobs:
 
       - name: Build Backend
         working-directory: ./server
-        run: cargo build --release && strip server/target/release/hemolymph-rs && mv server/target/release/hemolymph-rs server/target/release/hemolymph-rs_amd64
+        run: cargo build --release && strip target/release/hemolymph-rs && mv target/release/hemolymph-rs target/release/hemolymph-rs_amd64
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
