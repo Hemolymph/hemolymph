@@ -1,0 +1,11 @@
+[workspace]
+members=["server", "frontend"]
+resolver="2"
+
+[workspace.dependencies]
+serde = { version = "1.0.203", features = ["derive"] }
+serde_json = "1.0.117"
+hemoglobin = "0.5.3"
+yew = { version = "0.21.0" }
+hemolymph-frontend = { path="frontend" }
+
