@@ -253,6 +253,11 @@ fn switch(route: Route) -> Html {
                             <p>{"To look for cards that devour other cards, you use "}<span class="code">{"devours:"}</span>{" or "}<span class="code">{"dev:"}</span>{", which require a search query inside them, wrapped in parentheses."}</p>
                             <p class="code">{"devours:(cost=1)"}</p>
                         </section>
+                        <section class="instruction devouredby">
+                            <h3>{"Devoured By"}</h3>
+                            <p>{"To look for cards that are devoured by other cards, you use "}<span class="code">{"devouredby:"}</span>{" or "}<span class="code">{"dby:"}</span>{", which require a search query inside them, wrapped in parentheses."}</p>
+                            <p class="code">{"dby:(n:\"vampire mantis\")"}</p>
+                        </section>
                         <section class="instruction fn_instr">
                             <h3>{"Functions"}</h3>
                             <p>{"To search based on things cards can be used for, use "}<span class="code">{"fn:"}</span>{". The spefifics of functions will be documented later, but right now you can, for example, search for "}<span class="code">{"fn:\"search deck\""}</span>{"."}</p>
@@ -261,6 +266,16 @@ fn switch(route: Route) -> Html {
                             <h3>{"Negation"}</h3>
                             <p>{"You can invert a query's result by putting a dash before it. The following example matches all cards without \"mantis\" in their name."}</p>
                             <p class="code">{"-n:mantis"}</p>
+                        </section>
+                        <section class="instruction flavortext">
+                            <h3>{"Flavor Text"}</h3>
+                            <p>{"You can search by flavortext. The fuzzy match ignores flavor text."}</p>
+                            <p class="code">{"flavortext:\"dr. vats\""}</p>
+                        </section>
+                        <section class="instruction sorting">
+                            <h3>{"Negation"}</h3>
+                            <p>{"By default, your searches are sorted by their fuzzy match. If there was no fuzzy search, they are sorted by their name in alphabetical order. You can change the name with "}<span class="code">{"so:"}</span>{" to sort ascendingly and "}<span class="code">{"sod:"}</span>{" to sort descendingly."}</p>
+                            <p class="code">{"so:ft"}</p>
                         </section>
                     </div>
                 </section>
