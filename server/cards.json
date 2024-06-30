@@ -1757,5 +1757,74 @@
         },
         "other": [],
         "functions": ["remove text from creature"]
+    },
+    {
+        "id": "manastone_sphere",
+        "name": "Manastone Sphere",
+        "description": "Sorcery Kin\n\nWhenever you execute a sorcery command, gain one blood.",
+        "type": "creature",
+        "cost": 3,
+        "health": 2,
+        "defense": 2,
+        "power": 0,
+        "kins": ["sorcery"],
+        "keywords": [],
+        "abilities": ["Whenever you execute a sorcery command, gain one blood."],
+        "artists": ["Katie Ampersand"],
+        "set": "The Blue Kingdom",
+        "legality": {
+            "tournaments": "y",
+            "bloodful": "y",
+            "bloodless": "y"
+        },
+        "other": [],
+        "functions": ["gain blood"],
+        "flavor_text": "Extracting energy from blood is hard the first few times.\n\nThen, the ball keeps rolling up."
+    },
+    {
+        "id": "measuring_instrument",
+        "name": "Measuring Instrument",
+        "description": "At the beginning of your turn, creatures in spaces between this creature and another one identical to it get +2 power until end of turn.",
+        "type": "creature",
+        "cost": 1,
+        "health": 2,
+        "defense": 0,
+        "power": 1,
+        "kins": [],
+        "keywords": [],
+        "abilities": ["At the beginning of your turn, creatures in spaces between this creature and another one identical to it get +2 power until end of turn."],
+        "artists": ["Katie Ampersand"],
+        "set": "The Blue Kingdom",
+        "legality": {
+            "tournaments": "y",
+            "bloodful": "y",
+            "bloodless": "y"
+        },
+        "other": [],
+        "functions": ["give power"],
+        "flavor_text": "\"Measurements are our window to the real world\"\n— Blue Queen, believed to be quoting Dr. Katta"
+    },
+    {
+        "id": "measuring_instrument_middle",
+        "name": "Measuring Instrument",
+        "img": ["MeasuringInstrumentMid"],
+        "description": "If this creature is between two \"Measuring Instrument\", it gets +3 Power",
+        "type": "creature",
+        "cost": 1,
+        "health": 2,
+        "defense": 1,
+        "power": 1,
+        "kins": [],
+        "keywords": [],
+        "abilities": ["If this creature is between two \"Measuring Instrument\", it gets +3 Power"],
+        "artists": ["Katie Ampersand"],
+        "set": "The Blue Kingdom",
+        "legality": {
+            "tournaments": "y",
+            "bloodful": "y",
+            "bloodless": "y"
+        },
+        "other": [],
+        "functions": ["give power"]
     }
 ]
