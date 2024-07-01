@@ -1,4 +1,7 @@
 #![warn(clippy::pedantic)]
+#![warn(clippy::nursery)]
+#![allow(clippy::significant_drop_tightening)]
+#![allow(clippy::future_not_send)]
 
 use actix_cors::Cors;
 use actix_web::{web, App, HttpRequest, HttpResponse, HttpServer, Responder};
@@ -89,8 +92,8 @@ async fn serve_index(data: web::Data<AppState>, req: HttpRequest) -> io::Result<
                     });
                 content
                     .replace("{content}", &renderer.render().await)
-                    .replace("{description}", &description)
-                    .replace("{ogimage}", &name)
+                    .replace("{description}", &htmlize::escape_attribute(&description))
+                    .replace("{ogimage}", &htmlize::escape_attribute(&name))
             })
         })
         .await
@@ -195,10 +198,10 @@ async fn view_card(data: web::Data<AppState>, query: web::Query<IdViewParam>) ->
 
     let results: Option<&Card> = results.get(&query.id);
 
-    match results {
-        Some(results) => HttpResponse::Ok().json(results),
-        None => HttpResponse::Ok().body("oops"),
-    }
+    results.map_or_else(
+        || HttpResponse::BadRequest().body("Not a valid card ID"),
+        |results| HttpResponse::Ok().json(results),
+    )
 }
 
 fn get_filegarden_link(name: &str) -> String {

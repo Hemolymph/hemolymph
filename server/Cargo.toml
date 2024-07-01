@@ -16,3 +16,4 @@ dotenv = "0.15.0"
 notify = "6.1.1"
 notify-debouncer-mini = "0.4.1"
 yew = { workspace = true, features = ["ssr"] }
+htmlize = "1.0.5"

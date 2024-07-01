@@ -7,7 +7,7 @@ use yew::{function_component, html, Html, HtmlResult, Properties};
 use crate::app::{get_ascii_titlecase, get_filegarden_link, modify_title};
 use crate::app::{HOST, PORT};
 
-#[derive(Properties, PartialEq)]
+#[derive(Properties, Eq, PartialEq)]
 #[allow(clippy::module_name_repetitions)]
 pub struct CardDetailsProps {
     pub card_id: String,
@@ -25,11 +25,7 @@ pub fn card_details(CardDetailsProps { card_id }: &CardDetailsProps) -> HtmlResu
         let client = Client::new();
         let url = format!("http://{HOST}:{PORT}/api/card?id={}", card_id.clone());
         if let Ok(response) = client.get(&url).send().await {
-            if let Ok(result) = response.json::<Card>().await {
-                Ok(result)
-            } else {
-                Err(CardDetailsErr::NotACard)
-            }
+            (response.json::<Card>().await).map_or(Err(CardDetailsErr::NotACard), Ok)
         } else {
             Err(CardDetailsErr::BadResponse)
         }

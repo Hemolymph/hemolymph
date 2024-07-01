@@ -1,4 +1,5 @@
 #![warn(clippy::pedantic)]
+#![warn(clippy::nursery)]
 mod card_details;
 use card_details::CardDetails;
 use std::collections::HashMap;
@@ -132,7 +133,7 @@ fn modify_title(title: &str) {
 }
 #[cfg(not(target_arch = "wasm32"))]
 #[allow(unused_variables)]
-fn modify_title(title: &str) {}
+const fn modify_title(title: &str) {}
 
 fn get_ascii_titlecase(s: &str) -> String {
     let mut b = s.to_string();
@@ -155,15 +156,12 @@ fn search_bar() -> Html {
                 task.cancel();
             }
             let task = Timeout::new(500, move || {
-                let mut query = QUERY.lock().unwrap();
                 let input = e
                     .target_unchecked_into::<web_sys::HtmlInputElement>()
                     .value();
                 state.set(!*state);
-                query.clone_from(&input);
-                nav.replace(&Route::Search {
-                    query: input.clone(),
-                });
+                QUERY.lock().unwrap().clone_from(&input);
+                nav.replace(&Route::Search { query: input });
             });
 
             debounce_task.borrow_mut().replace(task);
