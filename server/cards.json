@@ -1362,7 +1362,7 @@
         "health": 0,
         "defense": 0,
         "power": 0,
-        "kins": ["ant", "insect"],
+        "kins": [],
         "keywords": [],
         "abilities": ["Look at the top 5 cards from your deck. Put one in your hand and discard the rest."],
         "artists": ["Katie Ampersand"],
@@ -1679,7 +1679,7 @@
         "health": 2,
         "defense": 2,
         "power": 1,
-        "kins": ["assassin"],
+        "kins": [],
         "keywords": [],
         "abilities": ["Search the bible for one or more excerpts that can be adequately interpreted as Bloodless card rules.", "This card's text is that of the excerpts, in the order they appear."],
         "artists": ["Katie Ampersand"],
@@ -1826,5 +1826,95 @@
         },
         "other": [],
         "functions": ["give power"]
+    },
+    {
+        "id": "the_strange_deal",
+        "name": "The Strange Deal",
+        "description": "First: Pay 1 blood to deal 2 damage to any creature.\n\nSecond: Shuffle a grand design vestige into your deck.\n\nThird: Add 2 points to the health pool.",
+        "type": "creature saga",
+        "cost": 4,
+        "health": 2,
+        "defense": 1,
+        "power": 1,
+        "kins": [],
+        "keywords": [],
+        "abilities": ["When this creature is summoned, put one Lore counter on it.", "At the beginning of your turn, put one Lore counter on this creature.", "When this creature has 1 Lore counter, you may pay one blood to deal 2 damage to any creature.", "When this creature has 2 Lore counters, shuffle a grand design vestige into your deck.", "When this creature has 3 Lore counters, add two points to the health pool.", "When this creature has any other amount of Lore counters, exile it."],
+        "artists": ["Katie Ampersand"],
+        "set": "Normality",
+        "legality": {
+            "tournaments": "y",
+            "bloodful": "y",
+            "bloodless": "y"
+        },
+        "other": [],
+        "functions": ["give power"],
+        "flavor_text": "She was the only one who could help me, and the least likely one to do so, until she saw what was at risk."
+    },
+    {
+        "id": "guessmaster",
+        "name": "Guessmaster",
+        "description": "Say a card name and reveal the top card of your deck. You can't use that name the next time you execute this command.\n\nIf it has the name you said, gain 2 blood, put it at the bottom of your deck, and re-execute this command. Otherwise, put it in your hand and shuffle.",
+        "type": "command",
+        "cost": 2,
+        "health": 0,
+        "defense": 0,
+        "power": 0,
+        "kins": [],
+        "keywords": [],
+        "abilities": ["Say a card name and reveal the top card of your deck. You can't use that name the next time you execute this command.\n\nIf it has the name you said, gain 2 blood, put it at the bottom of your deck, and re-execute this command. Otherwise, put it in your hand and shuffle."],
+        "artists": ["Katie Ampersand"],
+        "set": "Fun And Games",
+        "legality": {
+            "tournaments": "y",
+            "bloodful": "y",
+            "bloodless": "y"
+        },
+        "other": [],
+        "functions": ["draw card", "gain blood", "shuffle"]
+    },
+    {
+        "id": "guessmaster",
+        "name": "Guessmaster",
+        "description": "Say a card name and reveal the top card of your deck. You can't use that name the next time you execute this command.\n\nIf it has the name you said, gain 2 blood, put it at the bottom of your deck, and re-execute this command. Otherwise, put it in your hand and shuffle.",
+        "type": "command",
+        "cost": 2,
+        "health": 0,
+        "defense": 0,
+        "power": 0,
+        "kins": [],
+        "keywords": [],
+        "abilities": ["Say a card name and reveal the top card of your deck. You can't use that name the next time you execute this command.\n\nIf it has the name you said, gain 2 blood, put it at the bottom of your deck, and re-execute this command. Otherwise, put it in your hand and shuffle."],
+        "artists": ["Katie Ampersand"],
+        "set": "Fun And Games",
+        "legality": {
+            "tournaments": "y",
+            "bloodful": "y",
+            "bloodless": "y"
+        },
+        "other": [],
+        "functions": ["draw card", "gain blood", "shuffle"]
+    },
+    {
+        "id": "yugioh",
+        "name": "Yu-Gi-Oh",
+        "img": ["YuGiOh"],
+        "description": "If this is your first turn, set the health pool to 1 and gain one blood. At any point, if you have a \"Magic: The Gathering\" in your hand, you can search for this card and reveal it. Shuffle your deck. If this is not your first turn, this command enters the timeline with one Command counter per card on your opponent's hand. Also, add one Command counter whenever your opponent draws a card. If this card has 12 Command counters, you win the game. Any time one of your opponent's creatures attacks an empty space, they may choose to not do so instead. If they choose this, add one Attacked counter. If this card has 3 or more Attacked counters, Liberate it. You may remove up to 3 Command counters from this card to remove that amount of Attacked counters. If you play this card and your opponent has a \"Magic: The Gathering,\" they can choose to play it simultaneously as you play this card.",
+        "type": "command",
+        "cost": 1,
+        "health": 0,
+        "defense": 0,
+        "power": 0,
+        "kins": [],
+        "keywords": [],
+        "abilities": ["If this is your first turn, set the health pool to 1 and gain one blood.", "At any point, if you have a \"Magic: The Gathering\" in your hand, you can search for this card and reveal it.", "Shuffle your deck.", "If this is not your first turn, this command enters the timeline with one Command counter per card on your opponent's hand. Also, add one Command counter whenever your opponent draws a card.", "If this card has 12 Command coutners, you win the game.", "Any time one of your opponent's creatures attacks an empty space, they may choose to not do so instead. If they choose this, add one Attacked counter.", "If this card has 3 or more Attacked counters, Liberate it.", "You may remove up to 3 Command counters from this card to remove that amount of Attacked counters.", "If you play this card and your opponent has a \"Magic: The Gathering,\" they can choose to play it simultaneously as you play this card."],
+        "artists": ["Katie Ampersand"],
+        "set": "Fun And Games",
+        "legality": {
+            "tournaments": "n",
+            "bloodful": "n",
+            "bloodless": "n"
+        },
+        "other": [],
+        "functions": ["not bothering"]
     }
 ]
