@@ -1916,5 +1916,49 @@
         },
         "other": [],
         "functions": ["not bothering"]
+    },
+    {
+        "id": "deep_cover",
+        "name": "Deep Cover",
+        "description": "Summon a creature from your hand hand face-down. Its Flip cost is equal to its Blood cost.",
+        "type": "command",
+        "cost": 2,
+        "health": 0,
+        "defense": 0,
+        "power": 0,
+        "kins": [],
+        "keywords": [],
+        "abilities": ["Summon a creature from your hand hand face-down. Its Flip cost is equal to its Blood cost."],
+        "artists": ["Katie Ampersand"],
+        "set": "The Red Kingdom",
+        "legality": {
+            "tournaments": "y",
+            "bloodful": "y",
+            "bloodless": "y"
+        },
+        "other": [],
+        "functions": ["summon creature face down"]
+    },
+    {
+        "id": "default_dance",
+        "name": "Default Dance",
+        "description": "Your opponent does not win the game. X is greater than or equal to 2.",
+        "type": "command",
+        "cost": ">=2",
+        "health": 0,
+        "defense": 0,
+        "power": 0,
+        "kins": [],
+        "keywords": [],
+        "abilities": ["Your opponent does not win the game"],
+        "artists": ["Katie Ampersand"],
+        "set": "Uncards",
+        "legality": {
+            "tournaments": "f",
+            "bloodful": "f",
+            "bloodless": "f"
+        },
+        "other": [],
+        "functions": ["mock opponent"]
     }
 ]
