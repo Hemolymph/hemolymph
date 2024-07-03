@@ -1942,7 +1942,7 @@
     {
         "id": "default_dance",
         "name": "Default Dance",
-        "description": "Your opponent does not win the game. X is greater than or equal to 2.",
+        "description": "Your opponent does not win the game.",
         "type": "command",
         "cost": ">=2",
         "health": 0,
