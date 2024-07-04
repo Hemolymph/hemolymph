@@ -77,7 +77,10 @@ async fn serve_index(data: web::Data<AppState>, req: HttpRequest) -> io::Result<
             let rt = Builder::new_current_thread().enable_all().build().unwrap();
             set.block_on(&rt, async {
                 let (description, name) = match card_details {
-                    Some(card) => (card.description.clone(), get_filegarden_link(&card.name)),
+                    Some(card) => (
+                        card.description.to_string(),
+                        get_filegarden_link(&card.name),
+                    ),
                     None => (
                         "A search engine for Bloodless cards.".to_string(),
                         String::new(),

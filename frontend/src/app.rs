@@ -74,7 +74,7 @@ fn card_list(CardListProps { search }: &CardListProps) -> Html {
                 Ok(response) => match response.json::<QueryResult>().await {
                     Ok(queryres) => result.set(Some(queryres)),
                     Err(err) => result.set(Some(QueryResult::Error {
-                        message: format!("Obtained a malformed response: \n{err}"),
+                        message: format!("Obtained a malformed response: \n{err:#?}"),
                     })),
                 },
                 Err(err) => result.set(Some(QueryResult::Error {

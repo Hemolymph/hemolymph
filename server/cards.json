@@ -2,7 +2,14 @@
   {
     "id": "vampire_mantis",
     "name": "Vampire Mantis",
-    "description": "Devours: Insect Kin with Bifurcated Strike\n\nUndead Kin\nBifurcated Strike\n\nWhen Killed: Gain one additional blood",
+    "description": [
+      "Devours: ",
+      {
+        "display": "Insect Kin with Bifurcated Strike",
+        "search": "k:insect kw:\"bifurcated strike\""
+      },
+      "\n\nUndead Kin\nBifurcated Strike\n\nWhen killed, gain one blood."
+    ],
     "cost": 3,
     "type": "creature",
     "health": 3,
@@ -285,7 +292,14 @@
   {
     "id": "bug_singer",
     "name": "Bug Singer",
-    "description": "Insect Kin\n\nWhen Played: Friendly Insect creatures move one space closer to this creature",
+    "description": [
+      "Insect Kin\n\nWhen Played, friendly ",
+      {
+        "display": "Insect creatures",
+        "search": "t:creature k:insect"
+      },
+      " move one space closer to this creature"
+    ],
     "type": "creature",
     "cost": 1,
     "health": 1,
@@ -401,7 +415,14 @@
       "DerangedResearcher2"
     ],
     "name": "Deranged Researcher",
-    "description": "When Played: Shuffle a \"Grand Design\" vestige into your deck",
+    "description": [
+      "When Played: Shuffle a ",
+      {
+        "display": "Grand Design",
+        "id": "grand_design"
+      },
+      " vestige into your deck."
+    ],
     "type": "creature",
     "cost": 4,
     "health": 3,
@@ -457,7 +478,14 @@
   {
     "id": "dog_treats",
     "name": "Dog Treats",
-    "description": "Search your deck for a creature card of blood cost 1.\n\nPut it into play.\n\nShuffle.",
+    "description": [
+      "Search your deck for a ",
+      {
+        "display": "creature card of blood cost 1",
+        "search": "t:creature c:1"
+      },
+      ".\n\nPut it into play.\n\nShuffle."
+    ],
     "type": "command",
     "cost": 2,
     "health": 0,
@@ -513,9 +541,16 @@
     "flavor_text": "While their reclusiveness makes it difficult to tell for certain, it seems that exile is more of a coming of age ritual among their peoples\n\n— Dr. Vats"
   },
   {
-    "id": "17",
+    "id": "follower_of_na",
     "name": "Follower Of Nä",
-    "description": "Evolves from: Cult Initiate\nCult Of Nä Kin\n\nCan be Called without evolving.\n\nSpend 2 blood X times to increase next attack by X.",
+    "description": [
+      "Evolves from: ",
+      {
+        "display": "Cult Initiate",
+        "id": "cult_initiate"
+      },
+      "\n\nCan be Called without evolving.\n\nSpend 2 blood X times to increase next attack by X."
+    ],
     "keywords": [
       {
         "name": "devours",
@@ -634,7 +669,14 @@
   {
     "id": "infected_fly",
     "name": "Infected Fly",
-    "description": "Devours: 1 Cost Insect Kin\n\nBifurcated Strike\nInsect Kin\n\nWhen this creature attacks and is blocked, gain one blood.",
+    "description": [
+      "Devours: ",
+      {
+        "display": "1 Cost Insect Kin",
+        "search": "c:1 k:\"insect\""
+      },
+      "\n\nBifurcated Strike\nInsect Kin\n\nWhen this creature attacks and is blocked, gain one blood."
+    ],
     "keywords": [
       {
         "name": "devours",
@@ -706,7 +748,14 @@
   {
     "id": "22",
     "name": "Leader Of The Cult Of Nä",
-    "description": "Evolves From: Follower Of Nä\nCult Of Nä Kin\nKin Strength\nKin Call",
+    "description": [
+      "Evolves From: ",
+      {
+        "display": "Follower Of Nä",
+        "id": "follower_of_na"
+      },
+      "\nCult Of Nä Kin\nKin Strength\nKin Call"
+    ],
     "keywords": [
       {
         "name": "devours",
@@ -1275,7 +1324,19 @@
   {
     "id": "spider_web",
     "name": "Spider Web",
-    "description": "Evolves From: Spider\nWhen Attacked: The attacking creature becomes Ensnared.\n\nWhen Killed: Summons a spider in the space left by this card.",
+    "description": [
+      "Evolves From: ",
+      {
+        "display": "Spider",
+        "id": "spider"
+      },
+      "\nWhen Attacked: The attacking creature becomes Ensnared.\n\nWhen Killed: Summons a ",
+      {
+        "display": "Spider",
+        "id": "spider"
+      },
+      " in the space left by this card."
+    ],
     "type": "creature",
     "cost": 3,
     "health": 1,
@@ -1334,7 +1395,14 @@
   {
     "id": "spellbook_of_luna",
     "name": "Spellbook Of Luna",
-    "description": "Search your deck for up to 2 sorcery commands. Reveal them and put them in your hand. Shuffle.",
+    "description": [
+      "Search your deck for up to 2",
+      {
+        "display": "sorcery command",
+        "search": "t:command k:sorcery"
+      },
+      "s. Reveal them and put them in your hand. Shuffle."
+    ],
     "type": "command",
     "cost": 3,
     "health": 0,
@@ -1396,7 +1464,14 @@
   {
     "id": "horrific_lurker_of_the_depths",
     "name": "Horrific Lurker Of The Depths",
-    "description": "Sorcery Kin\n\nWhenever you execute a sorcery command, draw a card.",
+    "description": [
+      "Sorcery Kin\n\nWhenever you execute a ",
+      {
+        "display": "sorcery command",
+        "search": "t:command k:sorcery"
+      },
+      ", draw a card."
+    ],
     "type": "creature",
     "cost": 5,
     "health": 5,
@@ -1480,7 +1555,14 @@
   {
     "id": "royal_scientist",
     "name": "Royal Scientist",
-    "description": "Blue Kingdom Kin\n\nAs long as you control another Blue Kingdom creature, your opponent can only play one card each turn. They may sacrifice X creatures to play X additional cards.",
+    "description": [
+      "Blue Kingdom Kin\n\nAs long as you control another ",
+      {
+        "display": "Blue Kingdom creature",
+        "search": "t:creature k:\"blue kingdom\""
+      },
+      ", your opponent can only play one card each turn. They may sacrifice X creatures to play X additional cards."
+    ],
     "type": "creature",
     "cost": 5,
     "health": 2,
@@ -1508,7 +1590,14 @@
   {
     "id": "blue_pawn",
     "name": "Blue Pawn",
-    "description": "Blue Kingdom Kin\n\nWhen another friendly Blue Kingdom creature enters the board, this creature cannot be attacked next turn.",
+    "description": [
+      "Blue Kingdom Kin\n\nWhen another friendly ",
+      {
+        "display": "Blue Kingdom creature",
+        "search": "t:creature k:\"blue kingdom\""
+      },
+      " enters the board, this creature cannot be attacked next turn."
+    ],
     "type": "creature",
     "cost": 2,
     "health": 1,
@@ -1916,7 +2005,14 @@
   {
     "id": "revivificate",
     "name": "Revivificate",
-    "description": "Put a creature of cost four or less from your discard pile into your hand",
+    "description": [
+      "Put a ",
+      {
+        "display": "creature of cost 4 or less",
+        "search": "t:creature c<=4"
+      },
+      " from your discard pile into your hand"
+    ],
     "type": "command",
     "cost": 2,
     "health": 0,
@@ -2095,7 +2191,14 @@
   {
     "id": "roost",
     "name": "Roost",
-    "description": "Target friendly creature with Flying loses Flying until the end of turn.",
+    "description": [
+      "Target friendly ",
+      {
+        "display": "creature with Flying",
+        "search": "t:creature kw:flying"
+      },
+      " loses Flying until the end of turn."
+    ],
     "type": "command",
     "cost": 1,
     "health": 0,
@@ -2337,7 +2440,14 @@
   {
     "id": "manastone_sphere",
     "name": "Manastone Sphere",
-    "description": "Sorcery Kin\n\nWhenever you execute a sorcery command, gain one blood.",
+    "description": [
+      "Sorcery Kin\n\nWhenever you execute a ",
+      {
+        "display": "sorcery command",
+        "search": "t:command k:sorcery"
+      },
+      ", gain one blood."
+    ],
     "type": "creature",
     "cost": 3,
     "health": 2,
@@ -2400,7 +2510,14 @@
     "img": [
       "MeasuringInstrumentMid"
     ],
-    "description": "If this creature is between two \"Measuring Instrument\", it gets +3 Power",
+    "description": [
+      "If this creature is between two ",
+      {
+        "display": "Measuring Instrument",
+        "search": "n:\"measuring instrument\""
+      },
+      ", it gets +3 Power"
+    ],
     "type": "creature",
     "cost": 1,
     "health": 2,
@@ -2431,7 +2548,14 @@
     "description": [
       [
         "Pay 1 blood to deal 2 damage to any creature.",
-        "Shuffle a grand design vestige into your deck.",
+        [
+          "Shuffle a ",
+          {
+            "display": "grand design",
+            "id": "grand_design"
+          },
+          " vestige into your deck."
+        ],
         "Add 2 points to the health pool."
       ]
     ],
@@ -2531,7 +2655,19 @@
     "img": [
       "YuGiOh"
     ],
-    "description": "If this is your first turn, set the health pool to 1 and gain one blood. At any point, if you have a \"Magic: The Gathering\" in your hand, you can search for this card and reveal it. Shuffle your deck. If this is not your first turn, this command enters the timeline with one Command counter per card on your opponent's hand. Also, add one Command counter whenever your opponent draws a card. If this card has 12 Command counters, you win the game. Any time one of your opponent's creatures attacks an empty space, they may choose to not do so instead. If they choose this, add one Attacked counter. If this card has 3 or more Attacked counters, Liberate it. You may remove up to 3 Command counters from this card to remove that amount of Attacked counters. If you play this card and your opponent has a \"Magic: The Gathering,\" they can choose to play it simultaneously as you play this card.",
+    "description": [
+      "If this is your first turn, set the health pool to 1 and gain one blood. At any point, if you have a ",
+      {
+        "display": "Magic: The Gathering",
+        "id": "magic_the_gathering"
+      },
+      " in your hand, you can search for this card and reveal it. Shuffle your deck. If this is not your first turn, this command enters the timeline with one Command counter per card on your opponent's hand. Also, add one Command counter whenever your opponent draws a card. If this card has 12 Command counters, you win the game. Any time one of your opponent's creatures attacks an empty space, they may choose to not do so instead. If they choose this, add one Attacked counter. If this card has 3 or more Attacked counters, Liberate it. You may remove up to 3 Command counters from this card to remove that amount of Attacked counters. If you play this card and your opponent has a ",
+      {
+        "display": "Magic: The Gathering",
+        "id": "magic_the_gathering"
+      },
+      " they can choose to play it simultaneously as you play this card."
+    ],
     "type": "command",
     "cost": 1,
     "health": 0,

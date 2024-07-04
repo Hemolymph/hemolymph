@@ -1,10 +1,12 @@
-use hemoglobin::cards::Card;
+use hemoglobin::cards::rich_text::RichElement;
+use hemoglobin::cards::{rich_text::RichString, Card};
 use rand::seq::SliceRandom;
 use reqwest::Client;
 use yew::suspense::use_future;
-use yew::{function_component, html, Html, HtmlResult, Properties};
+use yew::{function_component, hook, html, use_effect, use_state_eq, Html, HtmlResult, Properties};
+use yew_router::components::Link;
 
-use crate::app::{get_ascii_titlecase, get_filegarden_link, modify_title};
+use crate::app::{get_ascii_titlecase, get_filegarden_link, modify_title, run_future, Route};
 use crate::app::{HOST, PORT};
 
 #[derive(Properties, Eq, PartialEq)]
@@ -13,49 +15,48 @@ pub struct CardDetailsProps {
     pub card_id: String,
 }
 
+#[derive(Eq, PartialEq)]
 enum CardDetailsErr {
     NotACard,
     BadResponse,
 }
 
 #[function_component(CardDetails)]
-pub fn card_details(CardDetailsProps { card_id }: &CardDetailsProps) -> HtmlResult {
+pub fn card_details(CardDetailsProps { card_id }: &CardDetailsProps) -> Html {
     let card_id = card_id.to_owned();
-    let card = use_future(|| async move {
-        let client = Client::new();
-        let url = format!("http://{HOST}:{PORT}/api/card?id={}", card_id.clone());
-        if let Ok(response) = client.get(&url).send().await {
-            (response.json::<Card>().await).map_or(Err(CardDetailsErr::NotACard), Ok)
-        } else {
-            Err(CardDetailsErr::BadResponse)
-        }
-    })?;
+    let card = use_state_eq(|| None);
+    let card1 = card.clone();
+    use_effect(move || {
+        let card = card1.clone();
+        run_future(async move {
+            let client = Client::new();
+            let url = format!("http://{HOST}:{PORT}/api/card?id={}", card_id.clone());
+            if let Ok(response) = client.get(&url).send().await {
+                card.set(Some(
+                    (response.json::<Card>().await).map_or(Err(CardDetailsErr::NotACard), Ok),
+                ));
+            } else {
+                card.set(Some(Err(CardDetailsErr::BadResponse)));
+            }
+        });
+    });
 
     match *card {
-        Err(CardDetailsErr::NotACard) => Ok(html! {
+        None => html! {<p>{"Loading"}</p>},
+        Some(Err(CardDetailsErr::NotACard)) => html! {
             <div>
                 <p>{"Error: Server sent something that is not a card"}</p>
             </div>
-        }),
-        Err(CardDetailsErr::BadResponse) => Ok(html! {
+        },
+        Some(Err(CardDetailsErr::BadResponse)) => html! {
             <div>
                 <p>{"Error: Server couldn't be reached"}</p>
             </div>
-        }),
-        Ok(ref card) => {
+        },
+        Some(Ok(ref card)) => {
             let name = &card.name;
 
-            let description: Html = card
-                .description
-                .lines()
-                .filter_map(|line| {
-                    if line.is_empty() {
-                        None
-                    } else {
-                        Some(html! {<p class="description-line">{line}</p>})
-                    }
-                })
-                .collect();
+            let description: Html = render_rich_string(&card.description);
 
             let r#type = &card.r#type;
 
@@ -76,7 +77,7 @@ pub fn card_details(CardDetailsProps { card_id }: &CardDetailsProps) -> HtmlResu
 
             modify_title(name);
 
-            Ok(html! {
+            html! {
                 <div id="details-view">
                     <div id="details">
                         <img id="details-preview" src={get_filegarden_link(img)} />
@@ -97,7 +98,72 @@ pub fn card_details(CardDetailsProps { card_id }: &CardDetailsProps) -> HtmlResu
                         </div>
                     </div>
                 </div>
-            })
+            }
         }
     }
+}
+
+fn render_rich_string(string: &RichString) -> Html {
+    let mut paragraphs = vec![];
+    for element in string {
+        match element {
+            RichElement::String(string) => {
+                if paragraphs.is_empty() {
+                    paragraphs.push(vec![]);
+                }
+
+                let lines = &mut string.lines();
+                if let Some(x) = lines.next().filter(|x| !x.is_empty()) {
+                    paragraphs
+                        .last_mut()
+                        .unwrap()
+                        .push(RichElement::String(x.to_string()));
+                }
+
+                for line in lines.filter(|x| !x.is_empty()) {
+                    paragraphs.push(vec![RichElement::String(line.to_string())]);
+                }
+            }
+            el @ (RichElement::CardId {
+                display: _,
+                identity: _,
+            }
+            | RichElement::SpecificCard { display: _, id: _ }
+            | RichElement::CardSearch {
+                display: _,
+                search: _,
+            }) => match paragraphs.last_mut() {
+                Some(last) => last.push(el.clone()),
+                None => paragraphs.push(vec![el.clone()]),
+            },
+            el @ RichElement::Saga(_) => paragraphs.push(vec![el.clone()]),
+            RichElement::LineBreak => paragraphs.push(vec![]),
+        }
+    }
+
+    paragraphs
+        .iter()
+        .map(|x| {
+            let x: Html = x
+                .iter()
+                .map(|x| match x {
+                    RichElement::String(string) => html! {{string}},
+                    RichElement::CardId { display, identity } => html! {{display}},
+                    RichElement::SpecificCard { display, id } => {
+                        html! {<Link<Route> to={Route::Card{id: id.clone()}}>{display}</Link<Route>>}
+                    }
+                    RichElement::CardSearch { display, search } => html! {<Link<Route> to={Route::Search{query: search.clone()}}>{display}</Link<Route>>},
+                    RichElement::Saga(list) => {
+                        let list: Vec<Html> = list
+                            .iter()
+                            .map(|x| html! {<li>{render_rich_string(x)}</li>})
+                            .collect();
+                        html! {<ol>{list}</ol>}
+                    }
+                    RichElement::LineBreak => html! {<br />},
+                })
+                .collect();
+            html! { <p>{x}</p> }
+        })
+        .collect()
 }
