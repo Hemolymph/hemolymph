@@ -1,6 +1,5 @@
 use hemoglobin::cards::rich_text::RichElement;
 use hemoglobin::cards::{rich_text::RichString, Card};
-use rand::seq::SliceRandom;
 use reqwest::Client;
 use yew::suspense::use_future_with;
 use yew::{function_component, html, Html, HtmlResult, Properties};
@@ -13,6 +12,7 @@ use crate::app::{HOST, PORT};
 #[allow(clippy::module_name_repetitions)]
 pub struct CardDetailsProps {
     pub card_id: String,
+    pub img_index: usize,
 }
 
 #[derive(Eq, PartialEq)]
@@ -22,7 +22,7 @@ enum CardDetailsErr {
 }
 
 #[function_component(CardDetails)]
-pub fn card_details(CardDetailsProps { card_id }: &CardDetailsProps) -> HtmlResult {
+pub fn card_details(CardDetailsProps { card_id, img_index }: &CardDetailsProps) -> HtmlResult {
     let card = use_future_with(card_id.to_owned(), |card_id| async move {
         let client = Client::new();
         let url = format!("http://{HOST}:{PORT}/api/card?id={card_id}");
@@ -51,9 +51,7 @@ pub fn card_details(CardDetailsProps { card_id }: &CardDetailsProps) -> HtmlResu
 
             let r#type = &card.r#type;
 
-            let img = &card.img;
-
-            let img = img.choose(&mut rand::thread_rng()).unwrap_or(name);
+            let img = card.get_image_path(*img_index);
 
             let cost = &card.cost;
             let health = &card.health;
@@ -71,7 +69,7 @@ pub fn card_details(CardDetailsProps { card_id }: &CardDetailsProps) -> HtmlResu
             Ok(html! {
                 <div id="details-view">
                     <div id="details">
-                        <img id="details-preview" src={get_filegarden_link(img)} />
+                        <img id="details-preview" src={get_filegarden_link(&img)} />
                         <div id="text-description">
                             <h1 id="details-title">{name.clone()}</h1>
                             <hr />

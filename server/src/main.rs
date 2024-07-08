@@ -79,7 +79,7 @@ async fn serve_index(data: web::Data<AppState>, req: HttpRequest) -> io::Result<
                 let (description, name) = match card_details {
                     Some(card) => (
                         card.description.to_string(),
-                        get_filegarden_link(&card.name),
+                        get_filegarden_link(&card.get_image_path(0)),
                     ),
                     None => (
                         "A search engine for Bloodless cards.".to_string(),

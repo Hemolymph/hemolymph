@@ -8,7 +8,6 @@ use yew::suspense::use_future_with;
 
 use gloo_timers::callback::Timeout;
 use hemoglobin::cards::Card;
-use rand::seq::SliceRandom;
 use reqwest::Client;
 use serde::Deserialize;
 use yew::prelude::*;
@@ -33,6 +32,8 @@ pub static PORT: &str = "8080";
 enum Route {
     #[at("/:query")]
     Search { query: String },
+    #[at("/card/:id/:index")]
+    CardArt { id: String, index: usize },
     #[at("/card/:id")]
     Card { id: String },
     #[at("/howto")]
@@ -87,7 +88,7 @@ fn card_list(CardListProps { search }: &CardListProps) -> HtmlResult {
                 .iter()
                 .map(|card| {
                     html! {
-                        <Link<Route> to={Route::Card{id: card.id.clone()}}><img class="card-result" src={get_filegarden_link(card.img.choose(&mut rand::thread_rng()).unwrap_or(&card.name))} /></Link<Route>>
+                        <Link<Route> to={Route::Card{id: card.id.clone()}}><img class="card-result" src={get_filegarden_link(&card.get_image_path(0))} /></Link<Route>>
                     }
                 });
 
@@ -204,7 +205,10 @@ fn switch(route: Route) -> Html {
             html! {<Suspense fallback={fallback}><CardList search={query} /></Suspense>}
         }
         Route::Card { id } => {
-            html! {<Suspense fallback={fallback}> <CardDetails card_id={id}/> </Suspense>}
+            html! {<Suspense fallback={fallback}> <CardDetails card_id={id} img_index=0/> </Suspense>}
+        }
+        Route::CardArt { id, index } => {
+            html! {<Suspense fallback={fallback}> <CardDetails card_id={id} img_index={index}/> </Suspense>}
         }
         Route::Instructions => {
             modify_title("How To");
