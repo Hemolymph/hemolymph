@@ -2,11 +2,11 @@ use hemoglobin::cards::rich_text::RichElement;
 use hemoglobin::cards::{rich_text::RichString, Card};
 use rand::seq::SliceRandom;
 use reqwest::Client;
-use yew::suspense::use_future;
-use yew::{function_component, hook, html, use_effect, use_state_eq, Html, HtmlResult, Properties};
+use yew::suspense::use_future_with;
+use yew::{function_component, html, Html, HtmlResult, Properties};
 use yew_router::components::Link;
 
-use crate::app::{get_ascii_titlecase, get_filegarden_link, modify_title, run_future, Route};
+use crate::app::{get_ascii_titlecase, get_filegarden_link, modify_title, Route};
 use crate::app::{HOST, PORT};
 
 #[derive(Properties, Eq, PartialEq)]
@@ -22,38 +22,29 @@ enum CardDetailsErr {
 }
 
 #[function_component(CardDetails)]
-pub fn card_details(CardDetailsProps { card_id }: &CardDetailsProps) -> Html {
-    let card_id = card_id.to_owned();
-    let card = use_state_eq(|| None);
-    let card1 = card.clone();
-    use_effect(move || {
-        let card = card1.clone();
-        run_future(async move {
-            let client = Client::new();
-            let url = format!("http://{HOST}:{PORT}/api/card?id={}", card_id.clone());
-            if let Ok(response) = client.get(&url).send().await {
-                card.set(Some(
-                    (response.json::<Card>().await).map_or(Err(CardDetailsErr::NotACard), Ok),
-                ));
-            } else {
-                card.set(Some(Err(CardDetailsErr::BadResponse)));
-            }
-        });
-    });
+pub fn card_details(CardDetailsProps { card_id }: &CardDetailsProps) -> HtmlResult {
+    let card = use_future_with(card_id.to_owned(), |card_id| async move {
+        let client = Client::new();
+        let url = format!("http://{HOST}:{PORT}/api/card?id={card_id}");
+        if let Ok(response) = client.get(&url).send().await {
+            (response.json::<Card>().await).map_or(Err(CardDetailsErr::NotACard), Ok)
+        } else {
+            Err(CardDetailsErr::BadResponse)
+        }
+    })?;
 
     match *card {
-        None => html! {<p>{"Loading"}</p>},
-        Some(Err(CardDetailsErr::NotACard)) => html! {
+        Err(CardDetailsErr::NotACard) => Ok(html! {
             <div>
                 <p>{"Error: Server sent something that is not a card"}</p>
             </div>
-        },
-        Some(Err(CardDetailsErr::BadResponse)) => html! {
+        }),
+        Err(CardDetailsErr::BadResponse) => Ok(html! {
             <div>
                 <p>{"Error: Server couldn't be reached"}</p>
             </div>
-        },
-        Some(Ok(ref card)) => {
+        }),
+        Ok(ref card) => {
             let name = &card.name;
 
             let description: Html = render_rich_string(&card.description);
@@ -77,7 +68,7 @@ pub fn card_details(CardDetailsProps { card_id }: &CardDetailsProps) -> Html {
 
             modify_title(name);
 
-            html! {
+            Ok(html! {
                 <div id="details-view">
                     <div id="details">
                         <img id="details-preview" src={get_filegarden_link(img)} />
@@ -98,7 +89,7 @@ pub fn card_details(CardDetailsProps { card_id }: &CardDetailsProps) -> Html {
                         </div>
                     </div>
                 </div>
-            }
+            })
         }
     }
 }
@@ -148,7 +139,7 @@ fn render_rich_string(string: &RichString) -> Html {
                 .iter()
                 .map(|x| match x {
                     RichElement::String(string) => html! {{string}},
-                    RichElement::CardId { display, identity } => html! {{display}},
+                    RichElement::CardId { display, identity: _ } => html! {{display}},
                     RichElement::SpecificCard { display, id } => {
                         html! {<Link<Route> to={Route::Card{id: id.clone()}}>{display}</Link<Route>>}
                     }

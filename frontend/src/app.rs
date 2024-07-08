@@ -4,6 +4,7 @@ mod card_details;
 use card_details::CardDetails;
 use std::collections::HashMap;
 use std::sync::Mutex;
+use yew::suspense::use_future_with;
 
 use gloo_timers::callback::Timeout;
 use hemoglobin::cards::Card;
@@ -56,38 +57,32 @@ enum QueryResult {
 }
 
 #[function_component(CardList)]
-fn card_list(CardListProps { search }: &CardListProps) -> Html {
+fn card_list(CardListProps { search }: &CardListProps) -> HtmlResult {
     if search.trim().is_empty() {
         modify_title("");
     } else {
         modify_title("Searching");
     }
-    let result = use_state_eq(|| None);
-    let search = search.clone();
-    let result2 = result.clone();
-    use_effect(move || {
-        run_future(async move {
-            let result = result2.clone();
-            let client = Client::new();
-            let url = format!("http://{HOST}:{PORT}/api/search?query={}", search.clone());
-            match client.get(&url).send().await {
-                Ok(response) => match response.json::<QueryResult>().await {
-                    Ok(queryres) => result.set(Some(queryres)),
-                    Err(err) => result.set(Some(QueryResult::Error {
-                        message: format!("Obtained a malformed response: \n{err:#?}"),
-                    })),
+    let result = use_future_with(search.clone(), |search| async move {
+        let client = Client::new();
+        let url = format!("http://{HOST}:{PORT}/api/search?query={}", search.clone());
+        match client.get(&url).send().await {
+            Ok(response) => match response.json::<QueryResult>().await {
+                Ok(queryres) => queryres,
+                Err(err) => QueryResult::Error {
+                    message: format!("Obtained a malformed response: \n{err:#?}"),
                 },
-                Err(err) => result.set(Some(QueryResult::Error {
-                    message: format!("Couldn't get a response from the server. {err}"),
-                })),
-            }
-        });
-    });
-    match result.as_ref() {
-        Some(QueryResult::CardList {
-            query_text,
-            content,
-        }) => {
+            },
+            Err(err) => QueryResult::Error {
+                message: format!("Couldn't get a response from the server. {err}"),
+            },
+        }
+    })?;
+    match *result {
+        QueryResult::CardList {
+            ref query_text,
+            ref content,
+        } => {
             let a = content
                 .iter()
                 .map(|card| {
@@ -96,27 +91,20 @@ fn card_list(CardListProps { search }: &CardListProps) -> Html {
                     }
                 });
 
-            html! {
+            Ok(html! {
                 <>
                     <p id="query_readable">{"Showing "}{a.len()}{" "}{query_text}</p>
                     <div id="results">
                         {for a}
                     </div>
                 </>
-            }
+            })
         }
-        Some(QueryResult::Error { message }) => {
-            html! {
-                <div id="search-error">
-                    <p><b>{"ERROR:"}</b>{message}</p>
-                </div>
-            }
-        }
-        None => html! {
-            <div id="results">
-                {"Searching"}
+        QueryResult::Error { ref message } => Ok(html! {
+            <div id="search-error">
+                <p><b>{"ERROR:"}</b>{message}</p>
             </div>
-        },
+        }),
     }
 }
 
@@ -210,7 +198,7 @@ pub fn server_app(props: &ServerAppProps) -> Html {
 }
 
 fn switch(route: Route) -> Html {
-    let fallback = html! {<div><p>{"Loading..."}</p></div>};
+    let fallback = html! {<div><p class="suspense">{"Loading..."}</p></div>};
     match route {
         Route::Search { query } => {
             html! {<Suspense fallback={fallback}><CardList search={query} /></Suspense>}
@@ -287,26 +275,4 @@ fn get_filegarden_link(name: &str) -> String {
         "https://file.garden/ZJSEzoaUL3bz8vYK/bloodlesscards/{}.png",
         name.replace(' ', "").replace("ä", "a")
     )
-}
-
-#[cfg(target_arch = "wasm32")]
-pub fn run_future<F>(future: F)
-where
-    F: std::future::Future<Output = ()> + 'static,
-{
-    use wasm_bindgen_futures::spawn_local;
-    spawn_local(future);
-}
-
-#[cfg(not(target_arch = "wasm32"))]
-pub fn run_future<F>(future: F)
-where
-    F: std::future::Future<Output = ()> + 'static,
-{
-    use futures::executor::LocalPool;
-    use futures::task::LocalSpawnExt;
-
-    let mut pool = LocalPool::new();
-    pool.spawner().spawn_local(future).unwrap();
-    pool.run_until_stalled();
 }
