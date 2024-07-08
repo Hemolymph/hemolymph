@@ -2755,5 +2755,82 @@
     "functions": [
       "mock opponent"
     ]
+  },
+  {
+    "id": "perfectly_blank_creature",
+    "name": "Perfectly Blank Creature",
+    "description": "",
+    "type": "creature",
+    "cost": 0,
+    "health": 1,
+    "defense": 0,
+    "power": 0,
+    "kins": [],
+    "keywords": [],
+    "abilities": [],
+    "artists": [
+      "Katie Ampersand"
+    ],
+    "set": "Normality",
+    "legality": {
+      "tournaments": "y",
+      "bloodful": "y",
+      "bloodless": "y"
+    },
+    "other": [],
+    "functions": [],
+    "flavor_text": "Name, cost, health, defense and power. No Text. On a 7.781 x 10.875 inch slate."
+  },
+  {
+    "id": "perfectly_blank_command",
+    "name": "Perfectly Blank Command",
+    "description": "",
+    "type": "command",
+    "cost": 0,
+    "health": 0,
+    "defense": 0,
+    "power": 0,
+    "kins": [],
+    "keywords": [],
+    "abilities": [],
+    "artists": [
+      "Katie Ampersand"
+    ],
+    "set": "Normality",
+    "legality": {
+      "tournaments": "y",
+      "bloodful": "y",
+      "bloodless": "y"
+    },
+    "other": [],
+    "functions": [],
+    "flavor_text": "Name, cost, type. No Text. On a 7.781 x 10.875 inch slate."
+  },
+  {
+    "id": "titan_carcass",
+    "name": "Titan Carcass",
+    "description": "Destroy a creature with strength 4 or more",
+    "type": "command",
+    "cost": 4,
+    "health": 0,
+    "defense": 0,
+    "power": 0,
+    "kins": [],
+    "keywords": [],
+    "abilities": [
+      "Destroy a creature with strength 4 or more"
+    ],
+    "artists": [
+      "Katie Ampersand"
+    ],
+    "set": "Normality",
+    "legality": {
+      "tournaments": "y",
+      "bloodful": "y",
+      "bloodless": "y"
+    },
+    "other": [],
+    "functions": [],
+    "flavor_text": "Giant corpses of unknown origin are spread throughout the forest."
   }
 ]
