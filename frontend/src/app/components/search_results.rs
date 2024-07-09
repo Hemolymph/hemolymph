@@ -1,6 +1,6 @@
 use crate::app::Route;
+use crate::app::HOST;
 use crate::app::{get_filegarden_link, modify_title, QueryResult};
-use crate::app::{HOST, PORT};
 use reqwest::Client;
 use yew::html;
 use yew::{function_component, suspense::use_future_with, HtmlResult, Properties};
@@ -20,7 +20,7 @@ pub fn search_results(CardListProps { search }: &CardListProps) -> HtmlResult {
     }
     let result = use_future_with(search.clone(), |search| async move {
         let client = Client::new();
-        let url = format!("http://{HOST}:{PORT}/api/search?query={}", search.clone());
+        let url = format!("{HOST}/api/search?query={}", search.clone());
         match client.get(&url).send().await {
             Ok(response) => match response.json::<QueryResult>().await {
                 Ok(queryres) => queryres,

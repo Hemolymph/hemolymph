@@ -20,14 +20,10 @@ use yew_router::Router;
 
 static QUERY: Mutex<String> = Mutex::new(String::new());
 #[cfg(not(debug_assertions))]
-static HOST: &'static str = "104.248.54.50";
-#[cfg(not(debug_assertions))]
-static PORT: &'static str = "80";
+static HOST: &'static str = "https://hemolymph.net";
 
 #[cfg(debug_assertions)]
-pub static HOST: &str = "127.0.0.1";
-#[cfg(debug_assertions)]
-pub static PORT: &str = "8080";
+pub static HOST: &str = "http://127.0.0.1:8080";
 
 #[derive(Clone, Routable, PartialEq)]
 enum Route {

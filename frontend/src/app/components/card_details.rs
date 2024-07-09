@@ -6,8 +6,8 @@ use yew::suspense::use_future_with;
 use yew::{function_component, html, Html, HtmlResult, Properties};
 use yew_router::components::Link;
 
+use crate::app::HOST;
 use crate::app::{get_ascii_titlecase, get_filegarden_link, modify_title, Route};
-use crate::app::{HOST, PORT};
 
 #[derive(Properties, Eq, PartialEq)]
 #[allow(clippy::module_name_repetitions)]
@@ -26,7 +26,7 @@ enum CardDetailsErr {
 pub fn card_details(CardDetailsProps { card_id, img_index }: &CardDetailsProps) -> HtmlResult {
     let card = use_future_with(card_id.to_owned(), |card_id| async move {
         let client = Client::new();
-        let url = format!("http://{HOST}:{PORT}/api/card?id={card_id}");
+        let url = format!("{HOST}/api/card?id={card_id}");
         if let Ok(response) = client.get(&url).send().await {
             (response.json::<Card>().await).map_or(Err(CardDetailsErr::NotACard), Ok)
         } else {
