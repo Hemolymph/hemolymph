@@ -1117,7 +1117,7 @@
   {
     "id": "crypt_mantis",
     "name": "Crypt Mantis",
-    "description": "Insect Kin\nBifurcated Strike\n\nYou may sacrifice any of your creatures.\n\nWhenever you sacrifice a creature, add a +0/+0/+1 counter to this creature.",
+    "description": "Insect Kin\nBifurcated Strike\n\nYou may sacrifice your creatures at any point during your setup phase.\n\nWhenever you sacrifice a creature, add a +0/+0/+1 counter to this creature.",
     "cost": 4,
     "health": 3,
     "defense": 2,
@@ -1127,7 +1127,7 @@
       "insect"
     ],
     "abilities": [
-      "You may sacrifice any creatures from your board during your turn.",
+      "You may sacrifice your creatures at any point during your setup phase.",
       "Whenever you sacrifice a creature, add a +0/+0/+1 counter to this creature."
     ],
     "set": "The Forest",
@@ -2484,5 +2484,62 @@
       "bloodful": "y"
     },
     "flavor_text": "Giant corpses of unknown origin are spread throughout the forest."
+  },
+  {
+    "id": "tearful_goodbye",
+    "name": "Tearful Goodbye",
+    "description": "X is equal to target friendly creature's blood cost.\nSacrifice that creature.",
+    "cost": "X",
+    "health": 0,
+    "defense": 0,
+    "power": 0,
+    "type": "command",
+    "abilities": [
+      "X is equal to target friendly creature's blood cost.\nSacrifice that creature."
+    ],
+    "set": "Fun And Games",
+    "legality": {
+      "bloodless": "y",
+      "tournaments": "y",
+      "bloodful": "y"
+    }
+  },
+  {
+    "id": "veteran_commander",
+    "name": "Veteran Commander",
+    "description": "When this creature is destroyed, reveal a command and play it for free.",
+    "cost": 2,
+    "health": 1,
+    "defense": 0,
+    "power": 0,
+    "type": "creature",
+    "abilities": [
+      "When this creature is destroyed, reveal a command and play it for free."
+    ],
+    "set": "Fun And Games",
+    "legality": {
+      "bloodless": "y",
+      "tournaments": "y",
+      "bloodful": "y"
+    }
+  },
+  {
+    "id": "miscommunicated_orders",
+    "name": "Miscommunicated Orders",
+    "description": "Each player reveals a command from their hand or reveals cards from their deck until they reveal a command.\n\nWhichever command has the higher blood cost is played for free.",
+    "cost": 3,
+    "health": 0,
+    "defense": 0,
+    "power": 0,
+    "type": "command",
+    "abilities": [
+      "Each player reveals a command from their hand or reveals cards from their deck until they reveal a command.\n\nWhichever command has the higher blood cost is played for free."
+    ],
+    "set": "Fun And Games",
+    "legality": {
+      "bloodless": "y",
+      "tournaments": "y",
+      "bloodful": "y"
+    }
   }
 ]
