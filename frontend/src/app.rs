@@ -1,14 +1,15 @@
 #![warn(clippy::pedantic)]
 #![warn(clippy::nursery)]
-mod card_details;
-use card_details::CardDetails;
+
+mod components;
+
+use components::card_details::CardDetails;
+use components::search_results::SearchResults;
 use std::collections::HashMap;
 use std::sync::Mutex;
-use yew::suspense::use_future_with;
 
 use gloo_timers::callback::Timeout;
 use hemoglobin::cards::Card;
-use reqwest::Client;
 use serde::Deserialize;
 use yew::prelude::*;
 use yew_router::history::AnyHistory;
@@ -40,11 +41,6 @@ enum Route {
     Instructions,
 }
 
-#[derive(Properties, PartialEq)]
-struct CardListProps {
-    search: String,
-}
-
 #[derive(Deserialize, PartialEq)]
 #[serde(tag = "type")]
 enum QueryResult {
@@ -55,58 +51,6 @@ enum QueryResult {
     Error {
         message: String,
     },
-}
-
-#[function_component(CardList)]
-fn card_list(CardListProps { search }: &CardListProps) -> HtmlResult {
-    if search.trim().is_empty() {
-        modify_title("");
-    } else {
-        modify_title("Searching");
-    }
-    let result = use_future_with(search.clone(), |search| async move {
-        let client = Client::new();
-        let url = format!("http://{HOST}:{PORT}/api/search?query={}", search.clone());
-        match client.get(&url).send().await {
-            Ok(response) => match response.json::<QueryResult>().await {
-                Ok(queryres) => queryres,
-                Err(err) => QueryResult::Error {
-                    message: format!("Obtained a malformed response: \n{err:#?}"),
-                },
-            },
-            Err(err) => QueryResult::Error {
-                message: format!("Couldn't get a response from the server. {err}"),
-            },
-        }
-    })?;
-    match *result {
-        QueryResult::CardList {
-            ref query_text,
-            ref content,
-        } => {
-            let a = content
-                .iter()
-                .map(|card| {
-                    html! {
-                        <Link<Route> to={Route::Card{id: card.id.clone()}}><img class="card-result" src={get_filegarden_link(&card.get_image_path(0))} /></Link<Route>>
-                    }
-                });
-
-            Ok(html! {
-                <>
-                    <p id="query_readable">{"Showing "}{a.len()}{" "}{query_text}</p>
-                    <div id="results">
-                        {for a}
-                    </div>
-                </>
-            })
-        }
-        QueryResult::Error { ref message } => Ok(html! {
-            <div id="search-error">
-                <p><b>{"ERROR:"}</b>{message}</p>
-            </div>
-        }),
-    }
 }
 
 #[cfg(target_arch = "wasm32")]
@@ -202,7 +146,7 @@ fn switch(route: Route) -> Html {
     let fallback = html! {<div><p class="suspense">{"Loading..."}</p></div>};
     match route {
         Route::Search { query } => {
-            html! {<Suspense fallback={fallback}><CardList search={query} /></Suspense>}
+            html! {<Suspense fallback={fallback}><SearchResults search={query} /></Suspense>}
         }
         Route::Card { id } => {
             html! {<Suspense fallback={fallback}> <CardDetails card_id={id} img_index=0/> </Suspense>}

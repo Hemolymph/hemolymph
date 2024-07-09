@@ -1,3 +1,4 @@
+use crate::app::components::card_grid::CardThumbnail;
 use hemoglobin::cards::rich_text::RichElement;
 use hemoglobin::cards::{rich_text::RichString, Card};
 use reqwest::Client;
@@ -64,6 +65,13 @@ pub fn card_details(CardDetailsProps { card_id, img_index }: &CardDetailsProps) 
                 .map(|x| html! {<p class="flavor-line">{x}</p>})
                 .collect();
 
+            let alts = card.images.iter().enumerate().map(|(idx, _)| {
+                html! {
+                    <CardThumbnail id={card.id.clone()} image={card.get_image_path(idx)} art={idx}/>
+
+                }
+            });
+
             modify_title(name);
 
             Ok(html! {
@@ -78,13 +86,16 @@ pub fn card_details(CardDetailsProps { card_id, img_index }: &CardDetailsProps) 
                             {description}
                             if !flavor_text.is_empty() {
                                 <hr />
-                                {for flavor_text}
+                                { for flavor_text }
                             }
                             if !r#type.contains("command") {
                                 <hr />
                                 <p id="stats-line">{health}{"/"}{defense}{"/"}{power}</p>
                             }
                         </div>
+                    </div>
+                    <div id="card-alts" class="card-grid">
+                        {for alts}
                     </div>
                 </div>
             })
