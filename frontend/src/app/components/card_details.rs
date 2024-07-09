@@ -47,13 +47,9 @@ pub fn card_details(CardDetailsProps { card_id, img_index }: &CardDetailsProps) 
         }),
         Ok(ref card) => {
             let name = &card.name;
-
             let description: Html = render_rich_string(&card.description);
-
             let r#type = &card.r#type;
-
             let img = card.get_image_path(*img_index);
-
             let cost = &card.cost;
             let health = &card.health;
             let defense = &card.defense;
@@ -64,11 +60,9 @@ pub fn card_details(CardDetailsProps { card_id, img_index }: &CardDetailsProps) 
                 .filter(|x| !x.is_empty())
                 .map(|x| html! {<p class="flavor-line">{x}</p>})
                 .collect();
-
-            let alts = card.images.iter().enumerate().map(|(idx, _)| {
+            let alts = card.images.iter().enumerate().map(|(idx, image)| {
                 html! {
-                    <CardThumbnail id={card.id.clone()} image={card.get_image_path(idx)} art={idx}/>
-
+                    <CardThumbnail id={card.id.clone()} image={card.get_image_path(idx)} art={idx} authors={image.authors.clone()}/>
                 }
             });
 
@@ -94,9 +88,12 @@ pub fn card_details(CardDetailsProps { card_id, img_index }: &CardDetailsProps) 
                             }
                         </div>
                     </div>
-                    <div id="card-alts" class="card-grid">
-                        {for alts}
-                    </div>
+                    if card.images.len() > 1 {
+                        <h2 class="center-text">{"Alternate Artwork"}</h2>
+                        <div id="card-alts" class="card-grid">
+                            {for alts}
+                        </div>
+                    }
                 </div>
             })
         }
