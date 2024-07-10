@@ -102,7 +102,7 @@ fn search_bar() -> Html {
     html! {
          <nav id="search">
             <Link<Route> to={Route::Search { query: String::new() }}><img id="logo" src="https://file.garden/ZJSEzoaUL3bz8vYK/hemolymphlogo.png" /></Link<Route>>
-            <input id="search-bar" type="text" value={quer.clone()} placeholder="Type your search here. Search for () to see all cards." {oninput} />
+            <input id="search-bar" type="text" value={quer.clone()} placeholder="Type your search here. Search for () to see all cards." autofocus=true {oninput} />
             <Link<Route> to={Route::Instructions}><span>{"How To Use"}</span></Link<Route>>
         </nav>
     }
@@ -202,8 +202,18 @@ fn switch(route: Route) -> Html {
                             <p>{"You can search by flavortext. The fuzzy match ignores flavor text."}</p>
                             <p class="code">{"flavortext:\"dr. vats\""}</p>
                         </section>
+                        <section class="instruction orxor">
+                            <h3>{"OR and XOR"}</h3>
+                            <p>{"By default, your queries are AND-ed together, such that a card must match all restrictions. You can OR two restrictions together with OR and XOR"}</p>
+                            <p class="code">{"p:0 OR t:command"}</p>
+                        </section>
+                        <section class="instruction group">
+                            <h3>{"Instruction Groups"}</h3>
+                            <p>{"You can group queries together by wrapping them in parentheses, and then perform operations on the whole query. For example, negating or OR-ing various matches"}</p>
+                            <p class="code">{"(t:command k:sorcery) OR (t:creature)"}</p>
+                        </section>
                         <section class="instruction sorting">
-                            <h3>{"Negation"}</h3>
+                            <h3>{"Sorting"}</h3>
                             <p>{"By default, your searches are sorted by their fuzzy match. If there was no fuzzy search, they are sorted by their name in alphabetical order. You can change the name with "}<span class="code">{"so:"}</span>{" to sort ascendingly and "}<span class="code">{"sod:"}</span>{" to sort descendingly."}</p>
                             <p class="code">{"so:ft"}</p>
                         </section>
