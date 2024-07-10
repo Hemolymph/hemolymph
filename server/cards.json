@@ -323,6 +323,24 @@
   {
     "id": "child",
     "name": "Child",
+    "images": [
+      {
+        "sources": "CardName",
+        "authors": [
+          "Katie Ampersand"
+        ]
+      },
+      {
+        "sources": {
+          "Files": [
+            "ChildMel"
+          ]
+        },
+        "authors": [
+          "Mel"
+        ]
+      }
+    ],
     "description": "Whenever a friendly creature enters, this creature moves as close to it as possible.",
     "cost": 3,
     "health": 2,
