@@ -102,7 +102,7 @@ fn search_bar() -> Html {
     html! {
          <nav id="search">
             <Link<Route> to={Route::Search { query: String::new() }}><img id="logo" src="https://file.garden/ZJSEzoaUL3bz8vYK/hemolymphlogo.png" /></Link<Route>>
-            <input id="search-bar" type="text" value={quer.clone()} {oninput} />
+            <input id="search-bar" type="text" value={quer.clone()} placeholder="Type your search here. Search for () to see all cards." {oninput} />
             <Link<Route> to={Route::Instructions}><span>{"How To Use"}</span></Link<Route>>
         </nav>
     }
