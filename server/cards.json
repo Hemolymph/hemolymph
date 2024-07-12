@@ -141,7 +141,7 @@
     "type": "creature",
     "keywords": [
       {
-        "name": "kin call"
+        "name": "kin call x3"
       }
     ],
     "kins": [
@@ -1525,6 +1525,11 @@
     "id": "royal_engineer",
     "name": "Royal Engineer",
     "description": "Blue Kingdom Kin\nKin Call x3\n\nWhen this card attacks, choose which opponent space to attack. If that space has a creature, it loses its text until the end of next turn.",
+    "keywords": [
+      {
+        "name": "kin call"
+      }
+    ],
     "cost": 7,
     "health": 4,
     "defense": 1,
