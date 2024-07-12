@@ -427,9 +427,9 @@
       " vestige into your deck."
     ],
     "cost": 4,
-    "health": 3,
-    "defense": 1,
-    "power": 1,
+    "health": 1,
+    "defense": 0,
+    "power": 0,
     "type": "creature",
     "abilities": [
       "When Played: Shuffle a \"Grand Design\" vestige into your deck"
@@ -534,9 +534,9 @@
       "\n\nCan be Called without evolving.\n\nSpend 2 blood X times to increase next attack by X."
     ],
     "cost": 2,
-    "health": 0,
-    "defense": 0,
-    "power": 0,
+    "health": 1,
+    "defense": 1,
+    "power": 1,
     "type": "creature",
     "keywords": [
       {
@@ -1487,7 +1487,7 @@
     "name": "Blue Rook",
     "description": "Blue Kingdom Kin\n\nDuring your setup phase, you may move this card to any space to its left or right, if the path to it is unblocked.",
     "cost": 3,
-    "health": 3,
+    "health": 2,
     "defense": 2,
     "power": 2,
     "type": "creature",
@@ -1513,7 +1513,7 @@
     "name": "Royal Engineer",
     "description": "Blue Kingdom Kin\nKin Call x3\n\nWhen this card attacks, choose which opponent space to attack. If that space has a creature, it loses its text until the end of next turn.",
     "cost": 7,
-    "health": 3,
+    "health": 4,
     "defense": 1,
     "power": 3,
     "type": "creature",
@@ -1735,7 +1735,7 @@
     "name": "Wall Of Living Rock",
     "description": "When this creature enters the board, draw a card.\n\nWhen this creature dies, you do not gain any blood.",
     "cost": 1,
-    "health": 2,
+    "health": 3,
     "defense": 0,
     "power": 0,
     "type": "creature",
@@ -1832,16 +1832,16 @@
   {
     "id": "bluejay",
     "name": "Bluejay",
-    "description": "Flying\nPay 2 blood for this card to attack. It will do so as if it had Bifurcated Strike.",
+    "description": "Flying\nPay 2 blood for this card to gain Bifurcated Strike, then attack, then lose Bifurcated Strike",
     "cost": 3,
-    "health": 0,
-    "defense": 0,
-    "power": 0,
+    "health": 2,
+    "defense": 2,
+    "power": 1,
     "type": "creature",
     "abilities": [
-      "Pay 2 blood for this card to attack. It will do so as if it had Bifurcated Strike."
+      "Pay 2 blood for this card to gain Bifurcated Strike, then attack, then lose Bifurcated Strike"
     ],
-    "set": "Experiments",
+    "set": "The Forest",
     "legality": {
       "bloodful": "y",
       "tournaments": "y",
@@ -2506,14 +2506,14 @@
   {
     "id": "tearful_goodbye",
     "name": "Tearful Goodbye",
-    "description": "X is equal to target friendly creature's blood cost.\nSacrifice that creature.",
+    "description": "X is equal to target friendly creature's blood cost.\nDestroy that creature.",
     "cost": "X",
     "health": 0,
     "defense": 0,
     "power": 0,
     "type": "command",
     "abilities": [
-      "X is equal to target friendly creature's blood cost.\nSacrifice that creature."
+      "X is equal to target friendly creature's blood cost.\nDestroy that creature."
     ],
     "set": "Fun And Games",
     "legality": {
