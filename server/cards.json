@@ -1140,6 +1140,11 @@
     "health": 3,
     "defense": 2,
     "power": 0,
+    "keywords": [
+      {
+        "name": "bifurcated strike"
+      }
+    ],
     "type": "creature",
     "kins": [
       "insect"
@@ -1188,6 +1193,14 @@
     "health": 2,
     "defense": 1,
     "power": 2,
+    "keywords": [
+      {
+        "name": "flying defense"
+      },
+      {
+        "name": "piercing"
+      }
+    ],
     "type": "creature",
     "kins": [
       "insect"
@@ -1835,6 +1848,11 @@
     "description": "Flying\nPay 2 blood for this card to gain Bifurcated Strike, then attack, then lose Bifurcated Strike",
     "cost": 3,
     "health": 2,
+    "keywords": [
+      {
+        "name": "flying"
+      }
+    ],
     "defense": 2,
     "power": 1,
     "type": "creature",
