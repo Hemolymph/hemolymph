@@ -3,21 +3,30 @@ use crate::app::HOST;
 use crate::app::{get_filegarden_link, modify_title, QueryResult};
 use reqwest::Client;
 use yew::html;
+use yew::AttrValue;
+use yew::Callback;
 use yew::{function_component, suspense::use_future_with, HtmlResult, Properties};
 use yew_router::components::Link;
 
-#[derive(Properties, PartialEq, Eq)]
+#[derive(Properties, PartialEq)]
 pub struct CardListProps {
-    pub search: String,
+    pub search: AttrValue,
+    pub force_text_fn: Callback<AttrValue>,
 }
 
 #[function_component(SearchResults)]
-pub fn search_results(CardListProps { search }: &CardListProps) -> HtmlResult {
+pub fn search_results(
+    CardListProps {
+        search,
+        force_text_fn,
+    }: &CardListProps,
+) -> HtmlResult {
     if search.trim().is_empty() {
         modify_title("");
     } else {
         modify_title("Searching");
     }
+    force_text_fn.emit(search.clone());
     let result = use_future_with(search.clone(), |search| async move {
         let client = Client::new();
         let url = format!("{HOST}/api/search?query={}", search.clone());
