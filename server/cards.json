@@ -944,7 +944,7 @@
         ]
       }
     ],
-    "description": "Your opponent skips one turn. End your turn and skip the attack phase.",
+    "description": "Your opponent skips one turn.\n\nYour turn ends.",
     "cost": 1,
     "health": 0,
     "defense": 0,
@@ -952,7 +952,7 @@
     "type": "command",
     "abilities": [
       "Your opponent skips one turn.",
-      "End your turn and skip the attack phase."
+      "Your turn ends."
     ],
     "set": "The Kingdoms",
     "legality": {
@@ -962,8 +962,7 @@
     },
     "functions": [
       "skip opponent turn",
-      "end turn",
-      "skip attack phase"
+      "end turn"
     ]
   },
   {
@@ -2582,5 +2581,108 @@
       "tournaments": "y",
       "bloodful": "y"
     }
+  },
+  {
+    "id": "circle_of_consequence",
+    "name": "Circle Of Consequence",
+    "description": "Cumulative\n\nAs your opponent executes a command, you may pay its blood cost to discard it and for it to not be executed, then remove one cumulative counter from this card.",
+    "keywords": [
+      {
+        "name": "cumulative"
+      }
+    ],
+    "cost": 2,
+    "health": 0,
+    "defense": 0,
+    "power": 0,
+    "type": "extended command",
+    "abilities": [
+      "As your opponent executes a command, you may pay its blood cost to deny it, then remove one accumulate counter from this card."
+    ],
+    "set": "The Black Kingdom",
+    "legality": {
+      "bloodless": "y",
+      "tournaments": "y",
+      "bloodful": "y"
+    },
+    "functions": [
+      "deny command",
+      "interaction"
+    ]
+  },
+  {
+    "id": "spell_ring",
+    "name": "Spell Ring",
+    "description": "Cumulative\n\nWhenever this command accumulates, you may pay twice the blood cost of a command from your hand to link it to this command.\n\nWhenever your opponent executes a command, this card loses one accumulate counter from this command, then all chained commands are executed and immediately finished without discarding them before the opponent's command is executed.",
+    "keywords": [
+      {
+        "name": "cumulative"
+      }
+    ],
+    "cost": 0,
+    "health": 0,
+    "defense": 0,
+    "power": 0,
+    "type": "extended command",
+    "abilities": [
+      "Whenever this command accumulates, you may pay twice the blood cost of a command from your hand to link it to this command.\n\nWhenever your opponent executes a command, this card loses one accumulate counter from this command, then all chained commands are executed and immediately finished without discarding them before the opponent's command is executed."
+    ],
+    "set": "The Black Kingdom",
+    "legality": {
+      "bloodless": "y",
+      "tournaments": "y",
+      "bloodful": "y"
+    },
+    "functions": [
+      "interaction"
+    ]
+  },
+  {
+    "id": "their_watcher",
+    "name": "THEIR_WATCHER",
+    "description": "Whenever your opponent executes a command with a cost of half of X or less, it is denied.\n\nThis card's health is half of X rounded up.",
+    "cost": "X",
+    "health": "Y",
+    "defense": 1,
+    "power": 1,
+    "type": "creature",
+    "abilities": [
+      "Whenever your opponent executes a command with a cost of half of X or less, it is denied.",
+      "This card's health is half of X rounded up."
+    ],
+    "set": "THEIR_WATERS",
+    "legality": {
+      "bloodless": "y",
+      "tournaments": "y",
+      "bloodful": "y"
+    },
+    "functions": [
+      "deny command"
+    ],
+    "flavor_text": "The blood around her becomes stale."
+  },
+  {
+    "id": "their_vessel",
+    "name": "THEIR_VESSEL",
+    "description": "When you summon this creature, put all \"Blood Flask\" from your discard pile on the top of your Blood Deck.\n\nWhenever a friendly \"Blood Flask\" dies, put it on the top of our deck.",
+    "cost": 6,
+    "health": 3,
+    "defense": 1,
+    "power": 0,
+    "type": "creature",
+    "abilities": [
+      "Wheneven you summon this creature, put all \"Blood Flask\" from your discard pile on the top of your Blood Deck.",
+      "Whenever a friendly \"Blood Flask\" dies, put it on the top of our deck."
+    ],
+    "set": "THEIR_WATERS",
+    "legality": {
+      "bloodless": "y",
+      "tournaments": "y",
+      "bloodful": "y"
+    },
+    "functions": [
+      "revive blood flask"
+    ],
+    "flavor_text": "Their methods of travel grow out of thin air wherever they arrive, and srhink whenever they depart."
   }
 ]
