@@ -1272,7 +1272,7 @@
   {
     "id": "pulsating_lens",
     "name": "Pulsating Lens",
-    "description": "Sorcery Kin\n\nDraw a creature from your deck.",
+    "description": "Sorcery Kin\n\nDraw a card from your deck.",
     "cost": 1,
     "health": 0,
     "defense": 0,
@@ -1282,7 +1282,7 @@
       "sorcery"
     ],
     "abilities": [
-      "Draw a creature from your deck"
+      "Draw a card from your deck"
     ],
     "set": "The Forest",
     "legality": {
