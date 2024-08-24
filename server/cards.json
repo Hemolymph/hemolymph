@@ -2640,6 +2640,24 @@
   {
     "id": "their_watcher",
     "name": "THEIR_WATCHER",
+    "images": [
+      {
+        "sources": "CardName",
+        "authors": [
+          "Katie Ampersand"
+        ]
+      },
+      {
+        "sources": {
+          "Files": [
+            "TheirWatcherAshley"
+          ]
+        },
+        "authors": [
+          "Ashley Chekhov"
+        ]
+      }
+    ],
     "description": "Whenever your opponent executes a command with a cost of half of X or less, it is denied.\n\nThis card's health is half of X rounded up.",
     "cost": "X",
     "health": "Y",
@@ -2684,5 +2702,28 @@
       "revive blood flask"
     ],
     "flavor_text": "Their methods of travel grow out of thin air wherever they arrive, and srhink whenever they depart."
+  },
+  {
+    "id": "shadow_of_the_apochoron",
+    "name": "Shadow Of The Apochoron",
+    "description": "The next time your opponent draws a card, draw two cards.",
+    "cost": 2,
+    "health": 0,
+    "defense": 0,
+    "power": 0,
+    "type": "extended command",
+    "abilities": [
+      "The next time your opponent draws a card, draw two cards."
+    ],
+    "set": "THEIR_WATERS",
+    "legality": {
+      "bloodless": "y",
+      "tournaments": "y",
+      "bloodful": "y"
+    },
+    "functions": [
+      "draw card"
+    ],
+    "flavor_text": "Back when anhemology was thought to be sorcery and witchcraft, mages would stare into the fire and shape the smoke into this icon.\n\n— Queen Makvath, Pinned Note #578202"
   }
 ]
