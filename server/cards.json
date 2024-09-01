@@ -2413,7 +2413,7 @@
     "power": 0,
     "type": "command",
     "abilities": [
-      "Summon a creature from your hand Aface-down. Its Flip cost is equal to its Blood cost."
+      "Summon a creature from your hand face-down. Its Flip cost is equal to its Blood cost."
     ],
     "set": "The Red Kingdom",
     "legality": {
