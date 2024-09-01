@@ -2199,9 +2199,9 @@
       ", gain one blood."
     ],
     "cost": 3,
-    "health": 2,
+    "health": 3,
     "defense": 2,
-    "power": 0,
+    "power": 1,
     "type": "creature",
     "kins": [
       "sorcery"
@@ -2218,7 +2218,7 @@
     "functions": [
       "gain blood"
     ],
-    "flavor_text": "Extracting energy from blood is hard the first few times.\n\nThen, the ball keeps rolling up."
+    "flavor_text": "Exctracting energy from blood is hard the first few times.\n\nThen, the ball keeps rolling up."
   },
   {
     "id": "measuring_instrument",
@@ -2241,7 +2241,7 @@
     "functions": [
       "give power"
     ],
-    "flavor_text": "\"Measurements are our window to the real world\"\n— Blue Queen, believed to be quoting Dr. Katta"
+    "flavor_text": "\"Measurements are our window to the real world\"\n— Blue Queen, believed to be quoting Dr.Katta"
   },
   {
     "id": "measuring_instrument_middle",
@@ -2339,30 +2339,6 @@
     ],
     "set": "Fun And Games",
     "legality": {
-      "bloodless": "y",
-      "bloodful": "y",
-      "tournaments": "y"
-    },
-    "functions": [
-      "draw card",
-      "gain blood",
-      "shuffle"
-    ]
-  },
-  {
-    "id": "guessmaster",
-    "name": "Guessmaster",
-    "description": "Say a card name and reveal the top card of your deck. You can't use that name the next time you execute this command.\n\nIf it has the name you said, gain 2 blood, put it at the bottom of your deck, and re-execute this command. Otherwise, put it in your hand and shuffle.",
-    "cost": 2,
-    "health": 0,
-    "defense": 0,
-    "power": 0,
-    "type": "command",
-    "abilities": [
-      "Say a card name and reveal the top card of your deck. You can't use that name the next time you execute this command.\n\nIf it has the name you said, gain 2 blood, put it at the bottom of your deck, and re-execute this command. Otherwise, put it in your hand and shuffle."
-    ],
-    "set": "Fun And Games",
-    "legality": {
       "bloodful": "y",
       "bloodless": "y",
       "tournaments": "y"
@@ -2430,14 +2406,14 @@
   {
     "id": "deep_cover",
     "name": "Deep Cover",
-    "description": "Summon a creature from your hand hand face-down. Its Flip cost is equal to its Blood cost.",
+    "description": "Summon a creature from your hand face-down. Its Flip cost is equal to its Blood cost.",
     "cost": 2,
     "health": 0,
     "defense": 0,
     "power": 0,
     "type": "command",
     "abilities": [
-      "Summon a creature from your hand hand face-down. Its Flip cost is equal to its Blood cost."
+      "Summon a creature from your hand Aface-down. Its Flip cost is equal to its Blood cost."
     ],
     "set": "The Red Kingdom",
     "legality": {
@@ -2565,15 +2541,15 @@
   },
   {
     "id": "miscommunicated_orders",
-    "name": "Miscommunicated Orders",
-    "description": "Each player reveals a command from their hand or reveals cards from their deck until they reveal a command.\n\nWhichever command has the higher blood cost is played for free.",
+    "name": "Miscommunicated Odrders",
+    "description": "Each player reveals a command from their hand or reveals cards from the top of their deck until they reveal a command.\n\nWhichever command has the higher blood cost is played for free.",
     "cost": 3,
     "health": 0,
     "defense": 0,
     "power": 0,
     "type": "command",
     "abilities": [
-      "Each player reveals a command from their hand or reveals cards from their deck until they reveal a command.\n\nWhichever command has the higher blood cost is played for free."
+      "Each player reveals a command from their hand or reveals cards from the top of their deck until they reveal a command.\n\nWhichever command has the higher blood cost is played for free."
     ],
     "set": "Fun And Games",
     "legality": {
@@ -2585,7 +2561,7 @@
   {
     "id": "circle_of_consequence",
     "name": "Circle Of Consequence",
-    "description": "Cumulative\n\nAs your opponent executes a command, you may pay its blood cost to discard it and for it to not be executed, then remove one cumulative counter from this card.",
+    "description": "Cumulative\n\nWhenever your opponent executes a command, you may pay its blood cost to deny it. Then, remove one cumulative counter from this command.",
     "keywords": [
       {
         "name": "cumulative"
@@ -2597,7 +2573,7 @@
     "power": 0,
     "type": "extended command",
     "abilities": [
-      "As your opponent executes a command, you may pay its blood cost to deny it, then remove one accumulate counter from this card."
+      "Whenever your opponent executes a command, you may pay its blood cost to deny it. Then, remove one cumulative counter from this command."
     ],
     "set": "The Black Kingdom",
     "legality": {
@@ -2613,7 +2589,7 @@
   {
     "id": "spell_ring",
     "name": "Spell Ring",
-    "description": "Cumulative\n\nWhenever this command accumulates, you may pay twice the blood cost of a command from your hand to link it to this command.\n\nWhenever your opponent executes a command, this card loses one accumulate counter from this command, then all chained commands are executed and immediately finished without discarding them before the opponent's command is executed.",
+    "description": "Cumulative\n\nWhenever this command accumulates, you may pay twice the blood cost of a command from your hand to link it to this command.\n\nWhenever your opponent executes a command, this card loses one accumulate counter, then all chained commands are executed and immediately finished without discarding them before the opponent's command is executed.",
     "keywords": [
       {
         "name": "cumulative"
@@ -2625,7 +2601,7 @@
     "power": 0,
     "type": "extended command",
     "abilities": [
-      "Whenever this command accumulates, you may pay twice the blood cost of a command from your hand to link it to this command.\n\nWhenever your opponent executes a command, this card loses one accumulate counter from this command, then all chained commands are executed and immediately finished without discarding them before the opponent's command is executed."
+      "Whenever this command accumulates, you may pay twice the blood cost of a command from your hand to link it to this command.\n\nWhenever your opponent executes a command, this card loses one accumulate counter, then all chained commands are executed and immediately finished without discarding them before the opponent's command is executed."
     ],
     "set": "The Black Kingdom",
     "legality": {
@@ -2640,15 +2616,14 @@
   {
     "id": "their_watcher",
     "name": "THEIR_WATCHER",
-    "description": "Whenever your opponent executes a command with a cost of half of X or less, it is denied.\n\nThis card's health is half of X rounded up.",
+    "description": "Whenever your opponent executes a command with a cost equal to X, it is denied.",
     "cost": "X",
-    "health": "Y",
+    "health": "X",
     "defense": 1,
     "power": 1,
     "type": "creature",
     "abilities": [
-      "Whenever your opponent executes a command with a cost of half of X or less, it is denied.",
-      "This card's health is half of X rounded up."
+      "Whenever your opponent executes a command with a cost equal to X, it is denied."
     ],
     "set": "THEIR_WATERS",
     "legality": {
@@ -2664,7 +2639,7 @@
   {
     "id": "their_vessel",
     "name": "THEIR_VESSEL",
-    "description": "When you summon this creature, put all \"Blood Flask\" from your discard pile on the top of your Blood Deck.\n\nWhenever a friendly \"Blood Flask\" dies, put it on the top of our deck.",
+    "description": "When you summon this creature, put all \"Blood Flask\" from your discard pile on the top of your Blood Deck.\n\nWhenever a friendly \"Blood Flask\" dies, put it on the top of your deck.",
     "cost": 6,
     "health": 3,
     "defense": 1,
@@ -2672,7 +2647,7 @@
     "type": "creature",
     "abilities": [
       "Wheneven you summon this creature, put all \"Blood Flask\" from your discard pile on the top of your Blood Deck.",
-      "Whenever a friendly \"Blood Flask\" dies, put it on the top of our deck."
+      "Whenever a friendly \"Blood Flask\" dies, put it on the top of your deck."
     ],
     "set": "THEIR_WATERS",
     "legality": {
@@ -2683,6 +2658,6 @@
     "functions": [
       "revive blood flask"
     ],
-    "flavor_text": "Their methods of travel grow out of thin air wherever they arrive, and srhink whenever they depart."
+    "flavor_text": "Their methods of travel grow out of thin air wherever they arrive and shrink whenever they depart."
   }
 ]
