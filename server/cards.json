@@ -2731,5 +2731,37 @@
       "draw card"
     ],
     "flavor_text": "Back when anhemology was thought to be sorcery and witchcraft, mages would stare into the fire and shape the smoke into this icon.\n\n— Queen Makvath, Pinned Note #578202"
+  },
+  {
+    "id": "luna",
+    "name": "Luna",
+    "description": [
+      "Whenever you play a ",
+      {
+        "display": "Sorcery Kin",
+        "search": "k:sorcery"
+      },
+      " add one \"sorcery\" counter to this command.\n\nRemove X \"sorcery\" counters from this command for all friendly creatures to gain +X strength."
+    ],
+    "cost": 3,
+    "health": 0,
+    "defense": 0,
+    "power": 0,
+    "type": "extended command",
+    "abilities": [
+      "Whenever you play a Sorcery Kin, add one \"sorcery\" counter to this command.",
+      "Remove X \"sorcery\" counters from this command for all friendly creatures to gain +X strength."
+    ],
+    "set": "The Forest",
+    "legality": {
+      "bloodless": "y",
+      "tournaments": "y",
+      "bloodful": "y"
+    },
+    "functions": [
+      "gain strength",
+      "graveyard matters"
+    ],
+    "flavor_text": "I don't like this plan anymore, Luna\nPlease, there has to be a better way"
   }
 ]
