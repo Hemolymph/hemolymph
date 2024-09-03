@@ -4,6 +4,9 @@ stripintegrity:
 	@echo "Stripping integrity hashes from the generated index file"
 	perl -pi -e 's/ *?integrity *?= *?\".*?\"//' ../server/dist/index.html
 
+delete:
+	rm ../server/dist/*
+
 build:
 	@echo "Building"
 	trunk build --release
@@ -16,8 +19,8 @@ builddebug:
 
 postbuild: stripintegrity
 
-run: build postbuild
+run: delete build postbuild
 
-debug: builddebug postbuild
+debug: delete builddebug postbuild
 
 .DEFAULT_GOAL := run
