@@ -1,4 +1,4 @@
-name: Rust
+name: Deploy
 
 on:
   push:
@@ -12,20 +12,46 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-
+        
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          
       - name: Install latest rust toolchain
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           default: true
           override: true
-
+          
       - name: Build Backend
         working-directory: ./server
         run: cargo build --release && strip ../target/release/hemolymph-rs && mv ../target/release/hemolymph-rs ../target/release/hemolymph-rs_amd64
-
+        
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: linux-build
           path: target/release/hemolymph-rs_amd64
+          
+      - name: Stop systemctl service
+        run: |
+          ssh -o StrictHostKeyChecking=no root@hemolymph.net "sudo systemctl stop hemolymph"
+          
+      - name: Push executable
+        run: |
+          rsync -avz --delete \
+          -e "ssh -o StrictHostKeyChecking=no" \
+          ./target/release/hemolymph-rs_amd64 root@hemolymph.net:/home/server
+          
+      - name: Push dist
+        working-directory: ./server
+        run: |
+          rsync -avz --delete \
+          -e "ssh -o StrictHostKeyChecking=no" \
+          ./dist root@hemolymph.net:/home/server
+          
+      - name: Re-enable server
+        run: |
+          ssh -o StrictHostKeyChecking=no root@hemolymph.net "/root/reserver.sh"
