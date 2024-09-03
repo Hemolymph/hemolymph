@@ -46,6 +46,7 @@ jobs:
           ./target/release/hemolymph-rs_amd64 root@hemolymph.net:/home/server
           
       - name: Push dist
+        working-directory: ./server
         run: |
           rsync -avz --delete \
           -e "ssh -o StrictHostKeyChecking=no" \
