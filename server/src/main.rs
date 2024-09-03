@@ -107,7 +107,7 @@ async fn serve_index(data: web::Data<AppState>, req: HttpRequest) -> io::Result<
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let data = fs::read_to_string("cards.json").expect("Unable to read file");
+    let data = fs::read_to_string("static/cards.json").expect("Unable to read file");
     let cards: Vec<Card> = serde_json::from_str(&data).expect("Unable to parse JSON");
     let cards = create_card_map(cards);
 
@@ -133,12 +133,13 @@ async fn main() -> std::io::Result<()> {
         let mut debouncer = new_debouncer(Duration::from_secs(1), tx).unwrap();
         debouncer
             .watcher()
-            .watch(Path::new("cards.json"), RecursiveMode::Recursive)
+            .watch(Path::new("static/cards.json"), RecursiveMode::Recursive)
             .unwrap();
         loop {
             match rx.try_recv() {
                 Ok(_) => {
-                    let data = fs::read_to_string("cards.json").expect("Unable to read file");
+                    let data =
+                        fs::read_to_string("static/cards.json").expect("Unable to read file");
                     match serde_json::from_str::<Vec<Card>>(&data) {
                         Ok(data) => {
                             let mut cards = cards_pointer.write().await;
