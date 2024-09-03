@@ -18,7 +18,6 @@ use std::sync::Arc;
 use std::time::Duration;
 use std::{env, fs, io};
 use tokio::sync::RwLock;
-use tokio::task::{spawn_blocking, LocalSet};
 use tokio::time::sleep;
 use yew::ServerRenderer;
 
@@ -71,43 +70,35 @@ async fn serve_index(data: web::Data<AppState>, req: HttpRequest) -> io::Result<
     } else {
         let content = fs::read_to_string("dist/index.html")?;
         let path = path.clone();
-        let content = spawn_blocking(move || {
-            use tokio::runtime::Builder;
-            let set = LocalSet::new();
-            let rt = Builder::new_current_thread().enable_all().build().unwrap();
-            set.block_on(&rt, async {
-                let (description, name) = match card_details {
-                    Some(card) => (
-                        card.description.to_string(),
-                        get_filegarden_link(&card.get_image_path(0)),
-                    ),
-                    None => (
-                        "A search engine for Bloodless cards.".to_string(),
-                        String::new(),
-                    ),
-                };
-                let renderer =
-                    ServerRenderer::<hemolymph_frontend::ServerApp>::with_props(move || {
-                        ServerAppProps {
-                            url: path.to_string_lossy().to_string().into(),
-                            queries: HashMap::new(),
-                        }
-                    });
-                content
-                    .replace("{content}", &renderer.render().await)
-                    .replace("{description}", &htmlize::escape_attribute(&description))
-                    .replace("{ogimage}", &htmlize::escape_attribute(&name))
-            })
-        })
-        .await
-        .unwrap();
+        let content = {
+            let (description, name) = match card_details {
+                Some(card) => (
+                    card.description.to_string(),
+                    get_filegarden_link(&card.get_image_path(0)),
+                ),
+                None => (
+                    "A search engine for Bloodless cards.".to_string(),
+                    String::new(),
+                ),
+            };
+            let renderer = ServerRenderer::<hemolymph_frontend::ServerApp>::with_props(move || {
+                ServerAppProps {
+                    url: path.to_string_lossy().to_string().into(),
+                    queries: HashMap::new(),
+                }
+            });
+            content
+                .replace("{content}", &renderer.render().await)
+                .replace("{description}", &htmlize::escape_attribute(&description))
+                .replace("{ogimage}", &htmlize::escape_attribute(&name))
+        };
         Ok(HttpResponse::Ok().content_type("text/html").body(content))
     }
 }
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let data = fs::read_to_string("static/cards.json").expect("Unable to read file");
+    let data = fs::read_to_string("./static/cards.json").expect("Unable to read file");
     let cards: Vec<Card> = serde_json::from_str(&data).expect("Unable to parse JSON");
     let cards = create_card_map(cards);
 
@@ -133,23 +124,31 @@ async fn main() -> std::io::Result<()> {
         let mut debouncer = new_debouncer(Duration::from_secs(1), tx).unwrap();
         debouncer
             .watcher()
-            .watch(Path::new("static/cards.json"), RecursiveMode::Recursive)
+            .watch(Path::new("./static"), RecursiveMode::Recursive)
             .unwrap();
         loop {
             match rx.try_recv() {
-                Ok(_) => {
-                    let data =
-                        fs::read_to_string("static/cards.json").expect("Unable to read file");
-                    match serde_json::from_str::<Vec<Card>>(&data) {
-                        Ok(data) => {
-                            let mut cards = cards_pointer.write().await;
-                            *cards = create_card_map(data);
+                Ok(Ok(events)) => {
+                    for event in events {
+                        if event.path.ends_with("cards.json") {
+                            let data = fs::read_to_string("./static/cards.json")
+                                .expect("Unable to read cards.json");
+                            match serde_json::from_str::<Vec<Card>>(&data) {
+                                Ok(data) => {
+                                    let mut cards = cards_pointer.write().await;
+                                    *cards = create_card_map(data);
+                                    println!("Successfully reloaded cards.json");
+                                }
+                                Err(x) => eprintln!("Failed to load cards.json: {x:#?}"),
+                            }
                         }
-                        Err(x) => eprintln!("{x:#?}"),
                     }
                 }
+                Ok(Err(error)) => eprintln!("Failed to watch: {error:#?}"),
+                Err(TryRecvError::Disconnected) => {
+                    eprintln!("File watcher was disconnected. This should not happen.");
+                }
                 Err(TryRecvError::Empty) => (),
-                Err(x) => eprintln!("{x:#?}"),
             }
             sleep(Duration::from_secs(0)).await;
         }
