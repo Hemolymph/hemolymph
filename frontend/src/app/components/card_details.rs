@@ -3,7 +3,8 @@ use hemoglobin::cards::rich_text::RichElement;
 use hemoglobin::cards::{rich_text::RichString, Card};
 use reqwest::Client;
 use yew::suspense::use_future_with;
-use yew::{function_component, html, Html, HtmlResult, Properties};
+use yew::{function_component, html, Callback, Html, HtmlResult, MouseEvent, Properties};
+use yew_hooks::use_clipboard;
 use yew_router::components::Link;
 
 use crate::app::HOST;
@@ -33,6 +34,8 @@ pub fn card_details(CardDetailsProps { card_id, img_index }: &CardDetailsProps) 
             Err(CardDetailsErr::BadResponse)
         }
     })?;
+
+    let clipboard = use_clipboard();
 
     match *card {
         Err(CardDetailsErr::NotACard) => Ok(html! {
@@ -68,6 +71,10 @@ pub fn card_details(CardDetailsProps { card_id, img_index }: &CardDetailsProps) 
 
             modify_title(name);
 
+            let image_id_clone = img.clone();
+            let copy_id =
+                Callback::from(move |_: MouseEvent| clipboard.write_text(image_id_clone.clone()));
+
             Ok(html! {
                 <div id="details-view">
                     <div id="details">
@@ -86,6 +93,7 @@ pub fn card_details(CardDetailsProps { card_id, img_index }: &CardDetailsProps) 
                                 <hr />
                                 <p id="stats-line">{health}{"/"}{defense}{"/"}{power}</p>
                             }
+                            <button onclick={copy_id}>{"Copy Marrow ID"}</button>
                         </div>
                     </div>
                     if card.images.len() > 1 {

@@ -5,7 +5,9 @@ use reqwest::Client;
 use yew::html;
 use yew::AttrValue;
 use yew::Callback;
+use yew::MouseEvent;
 use yew::{function_component, suspense::use_future_with, HtmlResult, Properties};
+use yew_hooks::use_clipboard;
 use yew_router::components::Link;
 
 #[derive(Properties, PartialEq)]
@@ -42,24 +44,32 @@ pub fn search_results(
             },
         }
     })?;
+    let clipboard = use_clipboard();
     match *result {
         QueryResult::CardList {
             ref query_text,
             ref content,
         } => {
-            let a = content
+            let cards = content
                 .iter()
                 .map(|card| {
+                    let clipboard = clipboard.clone();
+                    let image_id = card.get_image_path(0);
+                    let image_id_clone = image_id.clone();
+                    let copy_id = Callback::from(move |_: MouseEvent| clipboard.write_text(image_id_clone.clone()));
                     html! {
-                        <Link<Route> to={Route::Card{id: card.id.clone()}}><img class="card-result" src={get_filegarden_link(&card.get_image_path(0))} /></Link<Route>>
+                        <div class="card_result">
+                            <Link<Route> to={Route::Card{id: card.id.clone()}}><img class="card-result" src={get_filegarden_link(&image_id)} /></Link<Route>>
+                            <button onclick={copy_id}>{"Copy Marrow ID"}</button>
+                        </div>
                     }
                 });
 
             Ok(html! {
                 <>
-                    <p id="query_readable">{"Showing "}{a.len()}{" "}{query_text}</p>
+                    <p id="query_readable">{"Showing "}{cards.len()}{" "}{query_text}</p>
                     <div id="results" class="card-grid">
-                        {for a}
+                        {for cards}
                     </div>
                 </>
             })

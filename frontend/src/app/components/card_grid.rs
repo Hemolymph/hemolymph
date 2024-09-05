@@ -1,4 +1,5 @@
-use yew::{function_component, html, Html, Properties};
+use yew::{function_component, html, Callback, Html, InputEvent, MouseEvent, Properties};
+use yew_hooks::use_clipboard;
 use yew_router::components::Link;
 
 use crate::app::{get_filegarden_link, Route};
@@ -33,11 +34,18 @@ pub fn card_thumbnail(
                 .expect("Authors field was empty even though it verifiably was full")
         ),
     };
+
+    let clipboard = use_clipboard();
+
+    let image_clone = image.to_owned();
+
+    let copy_id = Callback::from(move |_: MouseEvent| clipboard.write_text(image_clone.clone()));
     if *art == 0 {
         html! {
             <div class="card-alt-view">
                 <span class="art-author">{authors}</span>
                 <Link<Route> to={Route::Card{id: id.clone()}}><img class="card-result" src={get_filegarden_link(image)} /></Link<Route>>
+                <button onclick={copy_id}>{"Copy Marrow ID"}</button>
             </div>
         }
     } else {
@@ -45,6 +53,7 @@ pub fn card_thumbnail(
             <div class="card-alt-view">
                 <span class="art-author">{authors}</span>
                 <Link<Route> to={Route::CardArt{ id: id.clone(), index: *art }}><img class="card-result" src={get_filegarden_link(image)} /></Link<Route>>
+                <button onclick={copy_id}>{"Copy Marrow ID"}</button>
             </div>
         }
     }
