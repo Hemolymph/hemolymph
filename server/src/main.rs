@@ -12,6 +12,7 @@ use notify::RecursiveMode;
 use notify_debouncer_mini::new_debouncer;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use std::ffi::OsStr;
 use std::path::{Path, PathBuf};
 use std::sync::mpsc::TryRecvError;
 use std::sync::Arc;
@@ -80,6 +81,18 @@ async fn serve_index(data: web::Data<AppState>, req: HttpRequest) -> io::Result<
                     "A search engine for Bloodless cards.".to_string(),
                     String::new(),
                 ),
+            };
+            let path: PathBuf = path
+                .iter()
+                .filter(|p| *p != OsStr::new("..") && *p != OsStr::new("."))
+                .collect();
+
+            let path = if path.starts_with("/") {
+                path
+            } else {
+                let mut new_path = PathBuf::from("/");
+                new_path.push(path);
+                new_path
             };
             let renderer = ServerRenderer::<hemolymph_frontend::ServerApp>::with_props(move || {
                 ServerAppProps {
