@@ -1,3 +1,4 @@
+use crate::app::use_clipboard;
 use crate::app::Route;
 use crate::app::HOST;
 use crate::app::{get_filegarden_link, modify_title, QueryResult};
@@ -7,7 +8,6 @@ use yew::AttrValue;
 use yew::Callback;
 use yew::MouseEvent;
 use yew::{function_component, suspense::use_future_with, HtmlResult, Properties};
-use yew_hooks::use_clipboard;
 use yew_router::components::Link;
 
 #[derive(Properties, PartialEq)]
@@ -56,7 +56,10 @@ pub fn search_results(
                     let clipboard = clipboard.clone();
                     let image_id = card.get_image_path(0);
                     let image_id_clone = image_id.clone();
-                    let copy_id = Callback::from(move |_: MouseEvent| clipboard.write_text(image_id_clone.clone()));
+                    let copy_id = Callback::from(move |_: MouseEvent| {
+                        let clipboard = clipboard.clone();
+                        clipboard.inspect(|clipboard| clipboard.write_text(image_id_clone.clone()));
+                    });
                     html! {
                         <div class="card_result">
                             <Link<Route> to={Route::Card{id: card.id.clone()}}><img class="card-result" src={get_filegarden_link(&image_id)} /></Link<Route>>

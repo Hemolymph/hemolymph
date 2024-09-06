@@ -6,6 +6,7 @@ mod components;
 use components::card_details::CardDetails;
 use components::search_results::SearchResults;
 use std::collections::HashMap;
+use yew_hooks::UseClipboardHandle;
 
 use gloo_timers::callback::Timeout;
 use hemoglobin::cards::Card;
@@ -246,4 +247,19 @@ fn get_filegarden_link(name: &str) -> String {
         "https://file.garden/ZJSEzoaUL3bz8vYK/bloodlesscards/{}.png",
         name.replace(' ', "").replace('ä', "a")
     )
+}
+
+#[hook]
+fn use_clipboard() -> Option<UseClipboardHandle> {
+    let clipboard;
+    #[cfg(target_arch = "wasm32")]
+    {
+        clipboard = Some(yew_hooks::use_clipboard());
+    }
+    #[cfg(not(target_arch = "wasm32"))]
+    {
+        clipboard = None;
+    }
+
+    clipboard
 }

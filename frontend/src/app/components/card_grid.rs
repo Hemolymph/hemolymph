@@ -1,8 +1,7 @@
-use yew::{function_component, html, Callback, Html, InputEvent, MouseEvent, Properties};
-use yew_hooks::use_clipboard;
+use yew::{function_component, html, Callback, Html, MouseEvent, Properties};
 use yew_router::components::Link;
 
-use crate::app::{get_filegarden_link, Route};
+use crate::app::{get_filegarden_link, use_clipboard, Route};
 
 #[derive(Properties, PartialEq, Eq)]
 pub struct CardThumbnailProps {
@@ -39,7 +38,10 @@ pub fn card_thumbnail(
 
     let image_clone = image.to_owned();
 
-    let copy_id = Callback::from(move |_: MouseEvent| clipboard.write_text(image_clone.clone()));
+    let copy_id = Callback::from(move |_: MouseEvent| {
+        let clipboard = clipboard.clone();
+        clipboard.inspect(|clipboard| clipboard.write_text(image_clone.clone()));
+    });
     if *art == 0 {
         html! {
             <div class="card-alt-view">

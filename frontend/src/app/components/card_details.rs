@@ -4,11 +4,10 @@ use hemoglobin::cards::{rich_text::RichString, Card};
 use reqwest::Client;
 use yew::suspense::use_future_with;
 use yew::{function_component, html, Callback, Html, HtmlResult, MouseEvent, Properties};
-use yew_hooks::use_clipboard;
 use yew_router::components::Link;
 
-use crate::app::HOST;
 use crate::app::{get_ascii_titlecase, get_filegarden_link, modify_title, Route};
+use crate::app::{use_clipboard, HOST};
 
 #[derive(Properties, Eq, PartialEq)]
 #[allow(clippy::module_name_repetitions)]
@@ -72,8 +71,10 @@ pub fn card_details(CardDetailsProps { card_id, img_index }: &CardDetailsProps) 
             modify_title(name);
 
             let image_id_clone = img.clone();
-            let copy_id =
-                Callback::from(move |_: MouseEvent| clipboard.write_text(image_id_clone.clone()));
+            let copy_id = Callback::from(move |_: MouseEvent| {
+                let clipboard = clipboard.clone();
+                clipboard.inspect(|clipboard| clipboard.write_text(image_id_clone.clone()));
+            });
 
             Ok(html! {
                 <div id="details-view">
