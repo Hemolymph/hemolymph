@@ -244,7 +244,7 @@ fn instructions() -> Html {
 
 fn get_filegarden_link(name: &str) -> String {
     format!(
-        "https://file.garden/ZJSEzoaUL3bz8vYK/bloodlesscards/{}.png",
+        "https://f005.backblazeb2.com/file/Hemolymph/bloodlesscards/{}.png",
         name.replace(' ', "").replace('ä', "a")
     )
 }
