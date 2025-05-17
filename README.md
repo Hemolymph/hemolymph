@@ -1,3 +1,6 @@
+# ARCHIVAL NOTICE
+This repository has been archived, as we now use a version made in Dioxus: [hemolymph/hemolymph-dioxus](https://github.com/Hemolymph/hemolymph-dioxus).
+
 # Hemolymph
 Hemolymph is a search engine for the card game Bloodless. For features, see [Hemoglobin](https://github.com/Lilith-In-Starlight/hemoglobin)'s search features.
 
